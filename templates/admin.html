@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Veda | Hospital Administration</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-low": "#161b2b",
+              "primary-fixed-dim": "#adc6ff",
+              "surface-bright": "#343949",
+              "surface-variant": "#2f3445",
+              "on-primary": "#002e6a",
+              "secondary": "#4edea3",
+              "primary-fixed": "#d8e2ff",
+              "on-surface": "#dee1f7",
+              "surface-dim": "#0e1322",
+              "on-background": "#dee1f7",
+              "outline": "#8c909f",
+              "on-primary-fixed": "#001a42",
+              "on-primary-container": "#00285d",
+              "inverse-on-surface": "#2b3040",
+              "background": "#0e1322",
+              "primary-container": "#4d8eff",
+              "on-secondary": "#003824",
+              "surface-container-lowest": "#090e1c",
+              "secondary-fixed-dim": "#4edea3",
+              "secondary-fixed": "#6ffbbe",
+              "tertiary-fixed": "#ffdad7",
+              "primary": "#adc6ff",
+              "on-secondary-fixed-variant": "#005236",
+              "tertiary": "#ffb3ad",
+              "on-tertiary-container": "#5c0008",
+              "surface": "#0e1322",
+              "inverse-primary": "#005ac2",
+              "tertiary-container": "#ff5451",
+              "on-surface-variant": "#c2c6d6",
+              "on-error": "#690005",
+              "on-error-container": "#ffdad6",
+              "on-tertiary-fixed": "#410004",
+              "on-tertiary-fixed-variant": "#930013",
+              "on-primary-fixed-variant": "#004395",
+              "surface-container-highest": "#2f3445",
+              "error-container": "#93000a",
+              "surface-container-high": "#25293a",
+              "surface-container": "#1a1f2f",
+              "error": "#ffb4ab",
+              "tertiary-fixed-dim": "#ffb3ad",
+              "on-secondary-fixed": "#002113",
+              "surface-tint": "#adc6ff",
+              "outline-variant": "#424754",
+              "on-tertiary": "#68000a",
+              "on-secondary-container": "#00311f",
+              "inverse-surface": "#dee1f7",
+              "secondary-container": "#00a572"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(20px);
+        }
+        .liquid-gradient {
+            background: linear-gradient(135deg, #adc6ff 0%, #4d8eff 100%);
+        }
+        .ghost-border {
+            outline: 1px solid rgba(66, 71, 84, 0.15);
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #2f3445; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-background text-on-surface selection:bg-primary/30 min-h-screen flex">
+<!-- SideNavBar (Shared Component JSON Mapping) -->
+<aside class="w-[220px] h-screen sticky left-0 top-0 border-r border-white/10 bg-slate-950/60 backdrop-blur-xl flex flex-col p-4 font-['Inter'] antialiased tracking-tight shadow-[20px_0_40px_rgba(0,0,0,0.4)] z-50">
+<div class="mb-8 px-2">
+<h1 class="text-2xl font-bold tracking-tighter bg-gradient-to-br from-blue-200 to-blue-500 bg-clip-text text-transparent">Veda</h1>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-[0.2em] mt-1 font-semibold">Hospital Administration</p>
+</div>
+<nav class="flex-1 space-y-1">
+<!-- Active: Dashboard/Overview -->
+<a class="flex items-center gap-3 px-4 py-3 text-blue-300 bg-white/10 rounded-lg transition-all active:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 hover:bg-white/5 hover:backdrop-blur-md transition-colors active:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="text-sm font-medium">Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 hover:bg-white/5 hover:backdrop-blur-md transition-colors active:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+<span class="text-sm font-medium">Orders</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 hover:bg-white/5 hover:backdrop-blur-md transition-colors active:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="bar_chart">bar_chart</span>
+<span class="text-sm font-medium">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 hover:bg-white/5 hover:backdrop-blur-md transition-colors active:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+<div class="pt-6 pb-2 px-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest">Administrative</div>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 hover:bg-white/5 hover:backdrop-blur-md transition-colors active:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="verified_user">verified_user</span>
+<span class="text-sm font-medium">Approvals</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 hover:bg-white/5 hover:backdrop-blur-md transition-colors active:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="text-sm font-medium">Audit Trail</span>
+</a>
+</nav>
+<div class="mt-auto p-4 glass-panel rounded-xl ghost-border">
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded-full object-cover border border-white/20" data-alt="Senior Hospital Administrator Portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDnP7ou0W04Dyb2QN47OQECaRukqoRwsNuYQ_A4Z-G-kBkfRL9wd7UspiavAH2YmIjqEglqY07dVWNeMVTIhCkygiXBl8iDRJTKrUxTfDGH1bgaT69jLCVXkKWAMZaBSxTn-kWcYurL3iqsYYuAZjVzOq-SWj8N3N-kR7H89O5sjMJdQb5lupKRJAtyl6nxL5dgx7pakm39OCcpvTHsl0dOT7jLJH8XxL1020eiav9_dHNftP2ayVfUeJaoVe9mwMnTOrkPEDapAusb"/>
+<div class="overflow-hidden">
+<p class="text-xs font-bold truncate">Dr. Aris Varma</p>
+<p class="text-[10px] text-on-surface-variant truncate">Chief Admin • Online</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col min-w-0 bg-surface-dim">
+<!-- TopNavBar (Shared Component JSON Mapping) -->
+<header class="w-full h-16 sticky top-0 z-40 border-b border-white/5 bg-slate-950/40 backdrop-blur-md flex justify-between items-center px-6">
+<div class="flex items-center flex-1 max-w-xl">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-lg">search</span>
+<input class="w-full bg-white/5 border-none rounded-full pl-10 pr-4 py-1.5 text-sm focus:ring-1 focus:ring-primary/40 placeholder:text-slate-600" placeholder="Search across hospital systems..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="hover:bg-white/5 rounded-full p-2 transition-all active:scale-95">
+<span class="material-symbols-outlined text-slate-400" data-icon="notifications">notifications</span>
+</button>
+<button class="hover:bg-white/5 rounded-full p-2 transition-all active:scale-95">
+<span class="material-symbols-outlined text-slate-400" data-icon="history">history</span>
+</button>
+<div class="h-8 w-[1px] bg-white/10 mx-2"></div>
+<button class="liquid-gradient px-4 py-1.5 rounded-lg text-on-primary text-xs font-bold shadow-lg shadow-primary/20 flex items-center gap-2 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">add</span>
+                    New Dispensation
+                </button>
+</div>
+</header>
+<!-- Content Area -->
+<div class="p-8 space-y-8 max-w-[1600px] mx-auto w-full">
+<!-- HOSPITAL-WIDE OVERVIEW -->
+<section class="grid grid-cols-1 md:grid-cols-5 gap-4">
+<div class="glass-panel p-5 rounded-xl ghost-border flex flex-col justify-between min-h-[140px]">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-blue-400 p-2 bg-blue-400/10 rounded-lg">storefront</span>
+<span class="text-[10px] font-bold text-blue-400 tracking-wider">NETWORK</span>
+</div>
+<div>
+<div class="text-3xl font-bold tracking-tight mb-1">8</div>
+<div class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Total Stores</div>
+</div>
+</div>
+<div class="glass-panel p-5 rounded-xl ghost-border flex flex-col justify-between min-h-[140px]">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-secondary p-2 bg-secondary/10 rounded-lg">account_balance_wallet</span>
+<span class="text-[10px] font-bold text-secondary tracking-wider">CAPITAL</span>
+</div>
+<div>
+<div class="text-xl font-bold tracking-tight mb-1">₹12,45,67,000</div>
+<div class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Total Inventory Value</div>
+</div>
+</div>
+<div class="glass-panel p-5 rounded-xl ghost-border flex flex-col justify-between min-h-[140px]">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-tertiary p-2 bg-tertiary/10 rounded-lg">delete_sweep</span>
+<span class="text-[10px] font-bold text-tertiary tracking-wider">LOSS</span>
+</div>
+<div>
+<div class="text-xl font-bold tracking-tight mb-1">₹2,34,000</div>
+<div class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Total Waste</div>
+</div>
+</div>
+<div class="glass-panel p-5 rounded-xl ghost-border flex flex-col justify-between min-h-[140px] border-l-2 border-error/50">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-error p-2 bg-error/10 rounded-lg">report_problem</span>
+<span class="text-[10px] font-bold text-error tracking-wider">URGENT</span>
+</div>
+<div>
+<div class="text-3xl font-bold tracking-tight mb-1 text-error">42</div>
+<div class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Critical Alerts</div>
+</div>
+</div>
+<div class="glass-panel p-5 rounded-xl ghost-border flex flex-col justify-between min-h-[140px]">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-primary p-2 bg-primary/10 rounded-lg">pending_actions</span>
+<span class="text-[10px] font-bold text-primary tracking-wider">QUEUE</span>
+</div>
+<div>
+<div class="text-3xl font-bold tracking-tight mb-1">7</div>
+<div class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Pending Approvals</div>
+</div>
+</div>
+</section>
+<!-- Main Comparison Chart & Approvals -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- CROSS-STORE COMPARISON -->
+<div class="lg:col-span-2 glass-panel p-6 rounded-xl ghost-border flex flex-col">
+<div class="flex justify-between items-end mb-8">
+<div>
+<h2 class="text-lg font-bold">Cross-Store Inventory Comparison</h2>
+<p class="text-xs text-on-surface-variant">Comparative analysis of stock value vs waste metrics</p>
+</div>
+<div class="flex gap-4">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Value</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-tertiary"></div>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Waste</span>
+</div>
+</div>
+</div>
+<!-- Custom Visual Representation (Simulating Chart) -->
+<div class="flex-1 flex items-end justify-between gap-6 h-64 px-4 pt-10">
+<div class="flex-1 flex flex-col items-center group">
+<div class="w-full flex justify-center gap-1 items-end h-full">
+<div class="w-6 bg-primary-container rounded-t-sm" style="height: 85%;"></div>
+<div class="w-6 bg-tertiary rounded-t-sm" style="height: 12%;"></div>
+</div>
+<span class="mt-4 text-[10px] font-bold text-on-surface-variant tracking-tighter">MAIN_PHARM</span>
+</div>
+<div class="flex-1 flex flex-col items-center group">
+<div class="w-full flex justify-center gap-1 items-end h-full">
+<div class="w-6 bg-primary-container rounded-t-sm" style="height: 45%;"></div>
+<div class="w-6 bg-tertiary rounded-t-sm" style="height: 8%;"></div>
+</div>
+<span class="mt-4 text-[10px] font-bold text-on-surface-variant tracking-tighter">ER_STOCK</span>
+</div>
+<div class="flex-1 flex flex-col items-center group">
+<div class="w-full flex justify-center gap-1 items-end h-full">
+<div class="w-6 bg-primary-container rounded-t-sm" style="height: 65%;"></div>
+<div class="w-6 bg-tertiary rounded-t-sm" style="height: 25%;"></div>
+</div>
+<span class="mt-4 text-[10px] font-bold text-on-surface-variant tracking-tighter">ICU_SURG</span>
+</div>
+<div class="flex-1 flex flex-col items-center group">
+<div class="w-full flex justify-center gap-1 items-end h-full">
+<div class="w-6 bg-primary-container rounded-t-sm" style="height: 30%;"></div>
+<div class="w-6 bg-tertiary rounded-t-sm" style="height: 5%;"></div>
+</div>
+<span class="mt-4 text-[10px] font-bold text-on-surface-variant tracking-tighter">OPD_CLINIC</span>
+</div>
+<div class="flex-1 flex flex-col items-center group">
+<div class="w-full flex justify-center gap-1 items-end h-full">
+<div class="w-6 bg-primary-container rounded-t-sm" style="height: 75%;"></div>
+<div class="w-6 bg-tertiary rounded-t-sm" style="height: 18%;"></div>
+</div>
+<span class="mt-4 text-[10px] font-bold text-on-surface-variant tracking-tighter">PAED_WARD</span>
+</div>
+<div class="flex-1 flex flex-col items-center group">
+<div class="w-full flex justify-center gap-1 items-end h-full">
+<div class="w-6 bg-primary-container rounded-t-sm" style="height: 55%;"></div>
+<div class="w-6 bg-tertiary rounded-t-sm" style="height: 10%;"></div>
+</div>
+<span class="mt-4 text-[10px] font-bold text-on-surface-variant tracking-tighter">ORTHO_LAB</span>
+</div>
+</div>
+</div>
+<!-- PENDING APPROVALS SECTION -->
+<div class="glass-panel p-6 rounded-xl ghost-border flex flex-col h-full">
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-lg font-bold">Pending High-Value</h2>
+<span class="bg-primary-container/20 text-primary-fixed-dim px-2 py-0.5 rounded text-[10px] font-bold tracking-widest">REQ &gt; ₹50K</span>
+</div>
+<div class="space-y-4 flex-1 overflow-y-auto pr-2">
+<!-- Approval Item 1 -->
+<div class="p-4 bg-white/5 rounded-lg border-l-2 border-primary transition-all hover:bg-white/10 cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<p class="text-xs font-bold truncate pr-4">Oncology Dept - Immunotherapy Batch</p>
+<span class="text-[10px] font-mono font-bold text-secondary">₹1,42,000</span>
+</div>
+<div class="flex justify-between items-center text-[10px] text-on-surface-variant">
+<span>Req: Dr. S. Kapoor</span>
+<span>2h ago</span>
+</div>
+</div>
+<!-- Approval Item 2 -->
+<div class="p-4 bg-white/5 rounded-lg border-l-2 border-primary transition-all hover:bg-white/10 cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<p class="text-xs font-bold truncate pr-4">Cardiology - Contrast Agents (6 Months)</p>
+<span class="text-[10px] font-mono font-bold text-secondary">₹89,500</span>
+</div>
+<div class="flex justify-between items-center text-[10px] text-on-surface-variant">
+<span>Req: Nurse Manager</span>
+<span>5h ago</span>
+</div>
+</div>
+<!-- Approval Item 3 -->
+<div class="p-4 bg-white/5 rounded-lg border-l-2 border-primary transition-all hover:bg-white/10 cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<p class="text-xs font-bold truncate pr-4">Main Lab - Diagnostic Reagents PKG</p>
+<span class="text-[10px] font-mono font-bold text-secondary">₹55,200</span>
+</div>
+<div class="flex justify-between items-center text-[10px] text-on-surface-variant">
+<span>Req: Lab Director</span>
+<span>1d ago</span>
+</div>
+</div>
+</div>
+<button class="mt-6 w-full py-3 bg-white/5 hover:bg-white/10 rounded-lg text-xs font-bold tracking-widest uppercase transition-colors border border-white/5">
+                        View All Approvals
+                    </button>
+</div>
+</div>
+<!-- STORE CARDS GRID -->
+<section class="space-y-6">
+<div class="flex items-center justify-between">
+<h2 class="text-xl font-extrabold tracking-tight">Managed Hospital Stores</h2>
+<div class="flex gap-2">
+<button class="p-2 glass-panel rounded-lg hover:bg-white/10 transition-colors"><span class="material-symbols-outlined text-sm">filter_list</span></button>
+<button class="p-2 glass-panel rounded-lg hover:bg-white/10 transition-colors"><span class="material-symbols-outlined text-sm">grid_view</span></button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+<!-- Store Card 1 -->
+<div class="glass-panel p-6 rounded-xl ghost-border hover:scale-[1.02] transition-transform cursor-pointer relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-3">
+<span class="bg-error text-on-error text-[10px] font-extrabold px-1.5 py-0.5 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-[10px]" style="font-variation-settings: 'FILL' 1;">priority_high</span> 12
+                            </span>
+</div>
+<div class="mb-4">
+<h3 class="font-bold text-sm">Main Inpatient Pharmacy</h3>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-widest font-semibold mt-0.5">Manager: Anita Sharma</p>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-end">
+<span class="text-[10px] text-on-surface-variant font-bold">VALUATION</span>
+<span class="text-sm font-mono font-bold">₹4,25,00,000</span>
+</div>
+<div class="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[82%]"></div>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-[10px] text-on-surface-variant">Capacity Utilization</span>
+<span class="text-[10px] font-bold">82%</span>
+</div>
+</div>
+</div>
+<!-- Store Card 2 -->
+<div class="glass-panel p-6 rounded-xl ghost-border hover:scale-[1.02] transition-transform cursor-pointer relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-3">
+<span class="bg-error text-on-error text-[10px] font-extrabold px-1.5 py-0.5 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-[10px]" style="font-variation-settings: 'FILL' 1;">priority_high</span> 04
+                            </span>
+</div>
+<div class="mb-4">
+<h3 class="font-bold text-sm">Emergency Care Unit</h3>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-widest font-semibold mt-0.5">Manager: Rajiv Singh</p>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-end">
+<span class="text-[10px] text-on-surface-variant font-bold">VALUATION</span>
+<span class="text-sm font-mono font-bold">₹1,12,30,000</span>
+</div>
+<div class="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[45%]"></div>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-[10px] text-on-surface-variant">Capacity Utilization</span>
+<span class="text-[10px] font-bold">45%</span>
+</div>
+</div>
+</div>
+<!-- Store Card 3 -->
+<div class="glass-panel p-6 rounded-xl ghost-border hover:scale-[1.02] transition-transform cursor-pointer relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-3">
+<span class="bg-error text-on-error text-[10px] font-extrabold px-1.5 py-0.5 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-[10px]" style="font-variation-settings: 'FILL' 1;">priority_high</span> 18
+                            </span>
+</div>
+<div class="mb-4">
+<h3 class="font-bold text-sm">Operation Theatre Complex</h3>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-widest font-semibold mt-0.5">Manager: Dr. Iyer</p>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-end">
+<span class="text-[10px] text-on-surface-variant font-bold">VALUATION</span>
+<span class="text-sm font-mono font-bold">₹3,45,20,000</span>
+</div>
+<div class="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-tertiary w-[94%] shadow-[0_0_8px_rgba(255,84,81,0.5)]"></div>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-[10px] text-error font-bold">CRITICAL STOCK</span>
+<span class="text-[10px] font-bold text-error">94%</span>
+</div>
+</div>
+</div>
+<!-- Store Card 4 -->
+<div class="glass-panel p-6 rounded-xl ghost-border hover:scale-[1.02] transition-transform cursor-pointer relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-3">
+<span class="bg-secondary text-on-secondary text-[10px] font-extrabold px-1.5 py-0.5 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-[10px]" style="font-variation-settings: 'FILL' 1;">check_circle</span> 0
+                            </span>
+</div>
+<div class="mb-4">
+<h3 class="font-bold text-sm">Diagnostic Lab Store</h3>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-widest font-semibold mt-0.5">Manager: S. Purnima</p>
+</div>
+<div class="space-y-3">
+<div class="flex justify-between items-end">
+<span class="text-[10px] text-on-surface-variant font-bold">VALUATION</span>
+<span class="text-sm font-mono font-bold">₹82,15,000</span>
+</div>
+<div class="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[62%]"></div>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-[10px] text-on-surface-variant">Capacity Utilization</span>
+<span class="text-[10px] font-bold">62%</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Subtle Footer Status -->
+<footer class="mt-auto py-3 px-8 border-t border-white/5 text-[10px] text-slate-500 flex justify-between items-center bg-slate-950/20">
+<div class="flex gap-6">
+<span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> System Online</span>
+<span>Last Updated: 14 Oct 2023, 14:22:10 IST</span>
+</div>
+<div class="flex gap-4">
+<a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-primary transition-colors" href="#">Support Portal</a>
+<span class="text-slate-600">v2.4.0-hospital-admin</span>
+</div>
+</footer>
+</main>
+<!-- Floating Action Element (Contextual) -->
+<div class="fixed bottom-8 right-8 z-50">
+<button class="w-14 h-14 rounded-2xl liquid-gradient text-on-primary shadow-2xl flex items-center justify-center group active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-3xl group-hover:rotate-90 transition-transform" style="font-variation-settings: 'wght' 500;">bolt</span>
+</button>
+</div>
+</body></html>

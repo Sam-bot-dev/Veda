@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Caduceus OS - Inventory Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-container-high": "#25293a",
+                        "error": "#ffb4ab",
+                        "surface": "#0e1322",
+                        "secondary-fixed-dim": "#4edea3",
+                        "on-secondary-container": "#00311f",
+                        "secondary": "#4edea3",
+                        "primary-container": "#4d8eff",
+                        "on-secondary-fixed-variant": "#005236",
+                        "background": "#0e1322",
+                        "on-tertiary": "#68000a",
+                        "surface-container-highest": "#2f3445",
+                        "outline": "#8c909f",
+                        "error-container": "#93000a",
+                        "on-secondary-fixed": "#002113",
+                        "secondary-container": "#00a572",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#930013",
+                        "tertiary-fixed-dim": "#ffb3ad",
+                        "tertiary": "#ffb3ad",
+                        "secondary-fixed": "#6ffbbe",
+                        "on-background": "#dee1f7",
+                        "on-tertiary-fixed": "#410004",
+                        "inverse-primary": "#005ac2",
+                        "surface-container": "#1a1f2f",
+                        "inverse-surface": "#dee1f7",
+                        "surface-tint": "#adc6ff",
+                        "primary": "#adc6ff",
+                        "on-surface-variant": "#c2c6d6",
+                        "surface-variant": "#2f3445",
+                        "on-surface": "#dee1f7",
+                        "surface-container-low": "#161b2b",
+                        "surface-bright": "#343949",
+                        "primary-fixed": "#d8e2ff",
+                        "primary-fixed-dim": "#adc6ff",
+                        "on-primary-fixed": "#001a42",
+                        "surface-container-lowest": "#090e1c",
+                        "surface-dim": "#0e1322",
+                        "on-primary": "#002e6a",
+                        "tertiary-fixed": "#ffdad7",
+                        "on-primary-container": "#00285d",
+                        "on-secondary": "#003824",
+                        "inverse-on-surface": "#2b3040",
+                        "on-error": "#690005",
+                        "outline-variant": "#424754",
+                        "tertiary-container": "#ff5451",
+                        "on-primary-fixed-variant": "#004395",
+                        "on-tertiary-container": "#5c0008"
+                    },
+                    fontFamily: {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #0a0f1e; }
+        .glass-panel { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .liquid-gradient { background: linear-gradient(135deg, #adc6ff 0%, #4d8eff 100%); }
+    </style>
+</head>
+<body class="text-on-surface antialiased overflow-hidden">
+<!-- Top Navigation Anchor -->
+<header class="fixed top-0 w-full z-50 bg-[#0a0f1e]/80 backdrop-blur-xl border-b border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.4)] flex justify-between items-center h-16 px-6">
+<div class="flex items-center gap-4">
+<span class="text-xl font-bold tracking-tighter text-blue-100">Caduceus</span>
+<div class="h-4 w-px bg-white/10 mx-2"></div>
+<h1 class="text-sm font-medium text-on-surface-variant">Central Inventory - Main Block A</h1>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/5">
+<span class="material-symbols-outlined text-[18px] text-blue-400">notifications</span>
+</div>
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/5">
+<span class="material-symbols-outlined text-[18px] text-blue-400">history</span>
+</div>
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/5">
+<span class="material-symbols-outlined text-[18px] text-blue-400">account_circle</span>
+</div>
+</div>
+</header>
+<!-- Side Navigation Anchor -->
+<aside class="fixed left-0 top-0 h-full w-64 z-40 bg-[#0a0f1e]/60 backdrop-blur-2xl border-r border-white/5 shadow-2xl flex flex-col pt-20 pb-6 font-['Inter'] text-sm font-medium">
+<div class="px-6 mb-8">
+<div class="text-lg font-black bg-gradient-to-br from-blue-200 to-blue-500 bg-clip-text text-transparent">Caduceus OS</div>
+<div class="text-[10px] text-slate-400 uppercase tracking-widest mt-1">Central Pharmacy</div>
+</div>
+<nav class="flex-1 space-y-1 px-3">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-blue-500/10 text-blue-300 border-r-2 border-blue-500/50 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span>Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span>Orders</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span>Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<div class="px-3 mt-auto space-y-1">
+<button class="w-full mb-4 liquid-gradient text-on-primary-container py-2.5 rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                New Batch
+            </button>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">help</span>
+<span>Help</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-all duration-200" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span>Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-20 h-screen overflow-y-auto no-scrollbar flex bg-[#0a0f1e]">
+<div class="flex-1 p-8 space-y-8 max-w-[1400px]">
+<!-- Hero Stats Bento -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="surface-container-low glass-panel rounded-xl p-6 border border-white/5 flex flex-col justify-between">
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-[0.2em]">Total Items</span>
+<div class="mt-4 flex items-baseline gap-2">
+<span class="text-4xl font-black text-primary">12,482</span>
+<span class="text-xs font-bold text-secondary">+12%</span>
+</div>
+</div>
+<div class="surface-container-low glass-panel rounded-xl p-6 border border-white/5 flex flex-col justify-between">
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-[0.2em]">Stock Value</span>
+<div class="mt-4 flex items-baseline gap-2">
+<span class="text-4xl font-black text-on-surface">₹42,85,200</span>
+</div>
+</div>
+<div class="surface-container-low glass-panel rounded-xl p-6 border border-white/10 ring-1 ring-error/20 flex flex-col justify-between bg-error/5">
+<span class="text-[10px] font-bold text-error uppercase tracking-[0.2em]">Critical Expiry Count</span>
+<div class="mt-4 flex items-baseline gap-2">
+<span class="text-4xl font-black text-error">14</span>
+<span class="text-xs font-medium text-error-container bg-error px-2 py-0.5 rounded-full">ACTION REQ</span>
+</div>
+</div>
+</div>
+<!-- Toolbar -->
+<div class="flex flex-wrap items-center justify-between gap-4 sticky top-0 z-30 py-2 bg-[#0a0f1e]/80 backdrop-blur-md">
+<div class="flex-1 flex items-center gap-4 min-w-[300px]">
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container-highest border-none rounded-xl pl-12 pr-4 py-3 text-sm focus:ring-2 focus:ring-primary/40 placeholder:text-outline/60" placeholder="Search medicines, salts, or batches..." type="text"/>
+</div>
+<div class="flex items-center gap-2">
+<select class="bg-surface-container-low border-none rounded-xl py-3 px-4 text-sm text-on-surface-variant focus:ring-1 focus:ring-primary/40 appearance-none min-w-[140px]">
+<option>Category: All</option>
+<option>Tablets</option>
+<option>Injections</option>
+<option>Syrups</option>
+</select>
+<select class="bg-surface-container-low border-none rounded-xl py-3 px-4 text-sm text-on-surface-variant focus:ring-1 focus:ring-primary/40 appearance-none min-w-[140px]">
+<option>Status: All</option>
+<option>Critical</option>
+<option>Warning</option>
+<option>Safe</option>
+</select>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="bg-surface-container-highest hover:bg-surface-bright text-on-surface px-4 py-3 rounded-xl text-sm font-semibold flex items-center gap-2 transition-all">
+<span class="material-symbols-outlined text-[20px]">download</span>
+                        Export
+                    </button>
+<button class="liquid-gradient text-on-primary-container px-6 py-3 rounded-xl text-sm font-bold flex items-center gap-2 shadow-lg active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[20px]">add_box</span>
+                        Receive Stock
+                    </button>
+</div>
+</div>
+<!-- Medicine Cards Grid -->
+<div class="grid grid-cols-1 gap-8 pb-12">
+<!-- Medicine Card 1 -->
+<div class="surface-container-low glass-panel rounded-2xl border border-white/5 overflow-hidden transition-all hover:border-white/20">
+<div class="p-6">
+<div class="flex justify-between items-start mb-6">
+<div class="space-y-1">
+<div class="flex items-center gap-3">
+<h3 class="text-2xl font-black tracking-tight text-on-surface">Paracetamol IP 500mg</h3>
+<span class="bg-primary/10 text-primary-fixed px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">Analgesic</span>
+</div>
+<p class="text-sm text-on-surface-variant font-medium">Acetaminophen Systemic</p>
+</div>
+<div class="text-right">
+<div class="flex items-center gap-2 justify-end mb-1">
+<span class="w-2 h-2 rounded-full bg-secondary shadow-[0_0_10px_rgba(78,222,163,0.5)]"></span>
+<span class="text-xs font-bold text-secondary uppercase">Stock Safe</span>
+</div>
+<p class="text-xs text-on-surface-variant">Last checked 2h ago</p>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-8 py-6 border-y border-white/5">
+<div>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Total Quantity</span>
+<p class="text-2xl font-black mt-1">2,400 <span class="text-xs font-medium text-outline">UNITS</span></p>
+</div>
+<div>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Total Value</span>
+<p class="text-2xl font-black mt-1">₹12,000.00</p>
+</div>
+<div>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Aisle Location</span>
+<p class="text-2xl font-black mt-1 text-primary-fixed">A-04-R2</p>
+</div>
+<div class="flex items-end justify-end">
+<button class="flex items-center gap-2 text-primary hover:text-primary-fixed font-bold text-sm">
+                                    Expand Batches
+                                    <span class="material-symbols-outlined text-[18px]">keyboard_arrow_down</span>
+</button>
+</div>
+</div>
+<!-- Expanded Section (Visible by default in this mockup) -->
+<div class="mt-6">
+<table class="w-full text-left">
+<thead class="text-[10px] font-bold text-outline uppercase tracking-widest">
+<tr>
+<th class="pb-4">Batch #</th>
+<th class="pb-4">Quantity</th>
+<th class="pb-4">Expiry Date</th>
+<th class="pb-4">Days Left</th>
+<th class="pb-4 text-right">Action</th>
+</tr>
+</thead>
+<tbody class="text-sm">
+<tr class="bg-white/5 rounded-lg group">
+<td class="py-4 pl-4 rounded-l-xl font-mono font-bold text-primary">#PCT99402</td>
+<td class="py-4">800 Units</td>
+<td class="py-4">12 OCT 2024</td>
+<td class="py-4">
+<div class="flex items-center gap-2">
+<span class="text-error font-bold">12 Days</span>
+<div class="h-1.5 w-16 bg-white/10 rounded-full overflow-hidden">
+<div class="h-full bg-error w-1/5 shadow-[0_0_8px_#ffb4ab]"></div>
+</div>
+</div>
+</td>
+<td class="py-4 pr-4 rounded-r-xl text-right">
+<span class="bg-blue-500/20 text-blue-300 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ring-1 ring-blue-500/40">Dispense Next</span>
+</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="py-4 pl-4 font-mono text-on-surface-variant">#PCT99811</td>
+<td class="py-4">1,600 Units</td>
+<td class="py-4">15 JAN 2026</td>
+<td class="py-4">
+<div class="flex items-center gap-2 text-secondary">
+<span>460 Days</span>
+</div>
+</td>
+<td class="py-4 pr-4 text-right">
+<button class="material-symbols-outlined text-outline hover:text-on-surface">more_horiz</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Medicine Card 2 -->
+<div class="surface-container-low glass-panel rounded-2xl border border-white/5 overflow-hidden transition-all hover:border-white/20">
+<div class="p-6">
+<div class="flex justify-between items-start mb-6">
+<div class="space-y-1">
+<div class="flex items-center gap-3">
+<h3 class="text-2xl font-black tracking-tight text-on-surface">Insulin Glargine 100 IU</h3>
+<span class="bg-tertiary/10 text-tertiary-fixed px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider">Antidiabetic</span>
+</div>
+<p class="text-sm text-on-surface-variant font-medium">Injection 3ml Cartridge</p>
+</div>
+<div class="text-right">
+<div class="flex items-center gap-2 justify-end mb-1">
+<span class="w-2 h-2 rounded-full bg-tertiary shadow-[0_0_10px_rgba(255,179,173,0.5)]"></span>
+<span class="text-xs font-bold text-tertiary uppercase">Low Stock</span>
+</div>
+<p class="text-xs text-on-surface-variant">Last checked 10m ago</p>
+</div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-8 py-6 border-y border-white/5">
+<div>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Total Quantity</span>
+<p class="text-2xl font-black mt-1 text-tertiary">42 <span class="text-xs font-medium text-outline">UNITS</span></p>
+</div>
+<div>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Total Value</span>
+<p class="text-2xl font-black mt-1">₹38,400.00</p>
+</div>
+<div>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Cold Chain</span>
+<p class="text-2xl font-black mt-1 text-secondary-fixed">2°C - 8°C</p>
+</div>
+<div class="flex items-end justify-end">
+<button class="flex items-center gap-2 text-primary hover:text-primary-fixed font-bold text-sm">
+                                    Expand Batches
+                                    <span class="material-symbols-outlined text-[18px]">keyboard_arrow_down</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Sidebar Panel: Low Stock Monitor -->
+<aside class="w-96 border-l border-white/5 bg-[#0a0f1e]/40 backdrop-blur-3xl sticky top-20 h-[calc(100vh-5rem)] p-8 flex flex-col">
+<div class="flex items-center justify-between mb-8">
+<h2 class="text-lg font-black tracking-tight flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary">monitoring</span>
+                    Low Stock Monitor
+                </h2>
+<span class="bg-tertiary/20 text-tertiary font-bold text-[10px] px-2 py-0.5 rounded-full">3 ALERTS</span>
+</div>
+<div class="space-y-4 flex-1 overflow-y-auto no-scrollbar">
+<!-- Alert Item -->
+<div class="p-4 rounded-xl bg-white/5 border border-white/5 space-y-3">
+<div class="flex justify-between items-start">
+<div>
+<h4 class="text-sm font-bold">Amoxicillin 250mg</h4>
+<p class="text-[10px] text-on-surface-variant uppercase">Current: 140 Units</p>
+</div>
+<span class="text-[10px] font-black text-error">CRITICAL</span>
+</div>
+<div class="h-1 w-full bg-white/10 rounded-full">
+<div class="h-full bg-error w-1/12"></div>
+</div>
+<div class="flex justify-between items-center text-[10px] font-bold text-outline">
+<span>Min Threshold: 1,200</span>
+<span class="text-error">Shortfall: 1,060</span>
+</div>
+</div>
+<!-- Alert Item -->
+<div class="p-4 rounded-xl bg-white/5 border border-white/5 space-y-3">
+<div class="flex justify-between items-start">
+<div>
+<h4 class="text-sm font-bold">Adrenaline 1mg/ml</h4>
+<p class="text-[10px] text-on-surface-variant uppercase">Current: 28 Units</p>
+</div>
+<span class="text-[10px] font-black text-tertiary">WARNING</span>
+</div>
+<div class="h-1 w-full bg-white/10 rounded-full">
+<div class="h-full bg-tertiary w-3/12"></div>
+</div>
+<div class="flex justify-between items-center text-[10px] font-bold text-outline">
+<span>Min Threshold: 100</span>
+<span class="text-tertiary">Shortfall: 72</span>
+</div>
+</div>
+<!-- Alert Item -->
+<div class="p-4 rounded-xl bg-white/5 border border-white/5 space-y-3">
+<div class="flex justify-between items-start">
+<div>
+<h4 class="text-sm font-bold">Saline 0.9% 500ml</h4>
+<p class="text-[10px] text-on-surface-variant uppercase">Current: 210 Units</p>
+</div>
+<span class="text-[10px] font-black text-tertiary">WARNING</span>
+</div>
+<div class="h-1 w-full bg-white/10 rounded-full">
+<div class="h-full bg-tertiary w-4/12"></div>
+</div>
+<div class="flex justify-between items-center text-[10px] font-bold text-outline">
+<span>Min Threshold: 500</span>
+<span class="text-tertiary">Shortfall: 290</span>
+</div>
+</div>
+</div>
+<div class="mt-8 space-y-3">
+<button class="w-full bg-white text-[#0a0f1e] py-3 rounded-xl font-black text-sm active:scale-95 transition-transform flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">mail</span>
+                    Send Reorder Reminder
+                </button>
+<div class="grid grid-cols-2 gap-3">
+<button class="bg-surface-container-highest py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest text-outline hover:text-on-surface transition-colors">Record Waste</button>
+<button class="bg-surface-container-highest py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest text-outline hover:text-on-surface transition-colors">Procure Now</button>
+</div>
+</div>
+</aside>
+</main>
+<!-- Background Decoration -->
+<div class="fixed top-0 left-0 w-full h-full pointer-events-none -z-10 overflow-hidden">
+<div class="absolute -top-[20%] -left-[10%] w-[60%] h-[60%] rounded-full bg-primary/10 blur-[120px]"></div>
+<div class="absolute top-[40%] -right-[10%] w-[50%] h-[50%] rounded-full bg-secondary/5 blur-[120px]"></div>
+<div class="absolute bottom-[-10%] left-[20%] w-[40%] h-[40%] rounded-full bg-tertiary/5 blur-[120px]"></div>
+</div>
+</body></html>

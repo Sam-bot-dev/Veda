@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Veda | Pharmacist Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-low": "#161b2b",
+              "primary-fixed-dim": "#adc6ff",
+              "surface-bright": "#343949",
+              "surface-variant": "#2f3445",
+              "on-primary": "#002e6a",
+              "secondary": "#4edea3",
+              "primary-fixed": "#d8e2ff",
+              "on-surface": "#dee1f7",
+              "surface-dim": "#0e1322",
+              "on-background": "#dee1f7",
+              "outline": "#8c909f",
+              "on-primary-fixed": "#001a42",
+              "on-primary-container": "#00285d",
+              "inverse-on-surface": "#2b3040",
+              "background": "#0e1322",
+              "primary-container": "#4d8eff",
+              "on-secondary": "#003824",
+              "surface-container-lowest": "#090e1c",
+              "secondary-fixed-dim": "#4edea3",
+              "secondary-fixed": "#6ffbbe",
+              "tertiary-fixed": "#ffdad7",
+              "primary": "#adc6ff",
+              "on-secondary-fixed-variant": "#005236",
+              "tertiary": "#ffb3ad",
+              "on-tertiary-container": "#5c0008",
+              "surface": "#0e1322",
+              "inverse-primary": "#005ac2",
+              "tertiary-container": "#ff5451",
+              "on-surface-variant": "#c2c6d6",
+              "on-error": "#690005",
+              "on-error-container": "#ffdad6",
+              "on-tertiary-fixed": "#410004",
+              "on-tertiary-fixed-variant": "#930013",
+              "on-primary-fixed-variant": "#004395",
+              "surface-container-highest": "#2f3445",
+              "error-container": "#93000a",
+              "surface-container-high": "#25293a",
+              "surface-container": "#1a1f2f",
+              "error": "#ffb4ab",
+              "tertiary-fixed-dim": "#ffb3ad",
+              "on-secondary-fixed": "#002113",
+              "surface-tint": "#adc6ff",
+              "outline-variant": "#424754",
+              "on-tertiary": "#68000a",
+              "on-secondary-container": "#00311f",
+              "inverse-surface": "#dee1f7",
+              "secondary-container": "#00a572"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #0e1322; }
+        .glass-panel { background: rgba(22, 27, 43, 0.6); backdrop-filter: blur(20px); }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .liquid-gradient { background: linear-gradient(135deg, #adc6ff 0%, #4d8eff 100%); }
+        .status-pill { background: rgba(255, 180, 171, 0.1); border: 1px solid rgba(255, 180, 171, 0.2); }
+    </style>
+</head>
+<body class="flex min-h-screen text-on-surface antialiased overflow-hidden">
+<!-- SideNavBar (Authority Source: JSON) -->
+<aside class="w-[220px] h-screen sticky left-0 top-0 border-r border-white/10 bg-slate-950/60 backdrop-blur-xl flex flex-col p-4 shadow-[20px_0_40px_rgba(0,0,0,0.4)] z-50">
+<div class="mb-8">
+<h1 class="text-2xl font-bold tracking-tighter bg-gradient-to-br from-blue-200 to-blue-500 bg-clip-text text-transparent">Veda</h1>
+<div class="mt-6 flex items-center gap-3 p-2 rounded-xl bg-white/5">
+<img alt="Sarah J., Pharmacist" class="w-10 h-10 rounded-lg object-cover border border-white/10" data-alt="Professional female pharmacist portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8CCNGB_lWsZApoeddS5cAzcSX_fEzWQGBc0nRrBU7MwZHrHvvUGV9iVFtq99Q-C-ypymGUZV2cLvCxU2NZXoO5zCXgZGH_-H8uDjrOQAw9q6eBltN5k4x3iffWst2QDcWivwcVqH46YjhsJj9nCLwhZ8G1fVegU6BovTDBV-QTRF_zgSbX0Ve6XJlymIRR-3cb9BxpXhQBmee-S4cTODBdo3uKWl613hxjCdBN5vwHqDeb21nKubAn9NjgEQInwPenX_g8Fa6Vyzb"/>
+<div class="overflow-hidden">
+<p class="text-sm font-semibold truncate">Sarah J.</p>
+<p class="text-[10px] text-slate-400 truncate uppercase tracking-widest">Pharmacist • Online</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-3 text-blue-300 bg-white/10 rounded-lg transition-all active:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 transition-colors hover:bg-white/5 hover:backdrop-blur-md rounded-lg group" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="text-sm font-medium">Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 transition-colors hover:bg-white/5 hover:backdrop-blur-md rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+<span class="text-sm font-medium">Orders</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 transition-colors hover:bg-white/5 hover:backdrop-blur-md rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="bar_chart">bar_chart</span>
+<span class="text-sm font-medium">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 transition-colors hover:bg-white/5 hover:backdrop-blur-md rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+<div class="mt-auto pt-6">
+<button class="w-full liquid-gradient text-on-primary-container font-bold py-3 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-primary-container/20 active:scale-[0.98] transition-all">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+<span class="text-xs uppercase tracking-tighter">New Dispensation</span>
+</button>
+<div class="mt-4 flex items-center gap-2 px-2">
+<div class="w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_#4edea3]"></div>
+<span class="text-[10px] text-on-surface-variant font-medium uppercase tracking-widest">System Online</span>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col h-screen overflow-y-auto bg-surface-container-lowest relative">
+<!-- Abstract Background Orbs -->
+<div class="absolute top-[-10%] left-[20%] w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
+<div class="absolute bottom-[-10%] right-[10%] w-[400px] h-[400px] bg-secondary/5 rounded-full blur-[100px] pointer-events-none"></div>
+<!-- TopNavBar (Authority Source: JSON) -->
+<header class="w-full h-16 sticky top-0 z-40 border-b border-white/5 bg-slate-950/40 backdrop-blur-md flex justify-between items-center px-8">
+<div>
+<h2 class="text-lg font-bold tracking-tight text-on-surface">Pharmacist Dashboard</h2>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-widest font-medium">Wednesday, Oct 25 • 09:42 AM</p>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative group cursor-pointer hover:bg-white/5 rounded-full p-2 transition-all">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-4 h-4 bg-error text-[10px] text-on-error flex items-center justify-center rounded-full font-bold border-2 border-background">4</span>
+</div>
+<div class="cursor-pointer hover:bg-white/5 rounded-full p-2 transition-all">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="history">history</span>
+</div>
+<div class="h-8 w-[1px] bg-white/10 mx-2"></div>
+<div class="flex items-center gap-3 cursor-pointer group">
+<div class="text-right hidden sm:block">
+<p class="text-xs font-bold text-on-surface group-hover:text-primary transition-colors">Sarah J.</p>
+<p class="text-[10px] text-on-surface-variant font-medium">ID: PH-9402</p>
+</div>
+</div>
+</div>
+</header>
+<!-- Dashboard Content -->
+<div class="p-8 space-y-8 relative z-10">
+<!-- AI RECOMMENDATION BANNER -->
+<section class="w-full">
+<div class="relative overflow-hidden rounded-2xl bg-surface-container-low border border-white/5 p-6 shadow-xl">
+<div class="absolute top-0 left-0 w-1.5 h-full bg-primary-container"></div>
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+<div class="space-y-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="auto_awesome">auto_awesome</span>
+<h3 class="text-sm font-bold tracking-tight text-on-surface">AI Recommendation — Updated Today</h3>
+</div>
+<div class="flex flex-wrap items-center gap-3">
+<span class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-error/10 border border-error/20 text-error text-xs font-bold">
+<span class="material-symbols-outlined text-sm" data-icon="warning">warning</span>
+                                    ⚠ Paracetamol 500mg · Batch B-2047 · Row C, Shelf 2 · Expires in 6 days · DISPENSE FIRST
+                                </span>
+<span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-on-surface-variant text-xs font-medium">
+                                    Inventory optimization suggested for antibiotic stock.
+                                </span>
+</div>
+</div>
+<button class="px-6 py-2 rounded-xl bg-white/5 border border-white/10 text-xs font-bold uppercase tracking-wider hover:bg-white/10 transition-all active:scale-95">
+                            Dismiss All
+                        </button>
+</div>
+</div>
+</section>
+<!-- STATS ROW -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Total Meds -->
+<div class="p-6 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-all group">
+<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-4">Total Medicines</p>
+<div class="flex items-end justify-between">
+<h4 class="text-3xl font-extrabold text-on-surface">1,248</h4>
+<div class="h-8 w-16 bg-primary/20 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-xl" data-icon="medication">medication</span>
+</div>
+</div>
+<div class="mt-4 h-1 w-full bg-white/5 rounded-full overflow-hidden">
+<div class="h-full w-3/4 bg-primary rounded-full"></div>
+</div>
+</div>
+<!-- Expiring -->
+<div class="p-6 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-all group">
+<p class="text-[10px] font-bold text-error uppercase tracking-widest mb-4">Expiring This Week</p>
+<div class="flex items-end justify-between">
+<h4 class="text-3xl font-extrabold text-error">12</h4>
+<div class="h-8 w-16 bg-error/20 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-error text-xl" data-icon="event_busy">event_busy</span>
+</div>
+</div>
+<p class="mt-4 text-[10px] text-on-surface-variant font-medium">Critical attention required</p>
+</div>
+<!-- Reorder -->
+<div class="p-6 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-all group">
+<p class="text-[10px] font-bold text-tertiary uppercase tracking-widest mb-4">Below Reorder Level</p>
+<div class="flex items-end justify-between">
+<h4 class="text-3xl font-extrabold text-tertiary">8</h4>
+<div class="h-8 w-16 bg-tertiary/20 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary text-xl" data-icon="inventory">inventory</span>
+</div>
+</div>
+<p class="mt-4 text-[10px] text-on-surface-variant font-medium">4 Orders pending approval</p>
+</div>
+<!-- Dispensing -->
+<div class="p-6 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-all group">
+<p class="text-[10px] font-bold text-secondary uppercase tracking-widest mb-4">Today's Dispensing</p>
+<div class="flex items-end justify-between">
+<h4 class="text-3xl font-extrabold text-on-surface tracking-tighter">₹42,840</h4>
+<div class="h-8 w-16 bg-secondary/20 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-xl" data-icon="account_balance_wallet">account_balance_wallet</span>
+</div>
+</div>
+<div class="mt-4 flex items-center gap-1 text-[10px] text-secondary">
+<span class="material-symbols-outlined text-[12px]" data-icon="trending_up">trending_up</span>
+<span>14% vs yesterday</span>
+</div>
+</div>
+</section>
+<!-- QUICK ACTIONS & ACTIVITY GRID -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Quick Actions (Left) -->
+<div class="lg:col-span-4 flex flex-col gap-4">
+<h3 class="text-xs font-bold text-on-surface-variant uppercase tracking-[0.2em]">Quick Actions</h3>
+<button class="flex items-center justify-between p-4 rounded-xl bg-surface-container-high border border-white/5 hover:border-primary/40 hover:bg-surface-variant transition-all group">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="prescriptions">prescriptions</span>
+</div>
+<span class="text-sm font-semibold text-on-surface">Dispense Medicines</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-sm group-hover:translate-x-1 transition-transform" data-icon="arrow_forward_ios">arrow_forward_ios</span>
+</button>
+<button class="flex items-center justify-between p-4 rounded-xl bg-surface-container-high border border-white/5 hover:border-primary/40 hover:bg-surface-variant transition-all group">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary" data-icon="inventory">inventory</span>
+</div>
+<span class="text-sm font-semibold text-on-surface">View Stock</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-sm group-hover:translate-x-1 transition-transform" data-icon="arrow_forward_ios">arrow_forward_ios</span>
+</button>
+<button class="flex items-center justify-between p-4 rounded-xl bg-surface-container-high border border-white/5 hover:border-primary/40 hover:bg-surface-variant transition-all group">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-tertiary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary" data-icon="notification_add">notification_add</span>
+</div>
+<span class="text-sm font-semibold text-on-surface">Send Reorder Reminder</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-sm group-hover:translate-x-1 transition-transform" data-icon="arrow_forward_ios">arrow_forward_ios</span>
+</button>
+<button class="flex items-center justify-between p-4 rounded-xl bg-primary-container/10 border border-primary-container/20 hover:bg-primary-container/20 transition-all group">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary-container/30 flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-fixed" data-icon="psychology">psychology</span>
+</div>
+<span class="text-sm font-semibold text-primary-fixed">AI Quick Query</span>
+</div>
+<span class="material-symbols-outlined text-primary-fixed text-sm group-hover:translate-x-1 transition-transform" data-icon="arrow_forward_ios">arrow_forward_ios</span>
+</button>
+</div>
+<!-- Recent Activity Table (Right) -->
+<div class="lg:col-span-8 space-y-4">
+<div class="flex items-center justify-between">
+<h3 class="text-xs font-bold text-on-surface-variant uppercase tracking-[0.2em]">Recent Activity</h3>
+<a class="text-[10px] text-primary font-bold uppercase tracking-wider hover:underline" href="#">View All History</a>
+</div>
+<div class="rounded-2xl bg-surface-container-low border border-white/5 overflow-hidden shadow-2xl">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-white/5">
+<th class="px-6 py-4 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Medicine</th>
+<th class="px-6 py-4 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Batch/Qty</th>
+<th class="px-6 py-4 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Patient Ref</th>
+<th class="px-6 py-4 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest text-right">Time</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-white/5">
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-6 py-4">
+<p class="text-sm font-bold text-on-surface">Amoxicillin 500mg</p>
+<p class="text-[10px] text-on-surface-variant">Capsule • 10 Units</p>
+</td>
+<td class="px-6 py-4">
+<p class="text-xs font-medium text-on-surface-variant">B-9920</p>
+<p class="text-[10px] text-primary">Dispensed: 2</p>
+</td>
+<td class="px-6 py-4 text-sm font-mono text-on-surface-variant">#P-88421</td>
+<td class="px-6 py-4 text-right text-xs text-on-surface-variant">4m ago</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-6 py-4">
+<p class="text-sm font-bold text-on-surface">Metformin Hydrochloride</p>
+<p class="text-[10px] text-on-surface-variant">Tablets • 500mg</p>
+</td>
+<td class="px-6 py-4">
+<p class="text-xs font-medium text-on-surface-variant">B-2012</p>
+<p class="text-[10px] text-primary">Dispensed: 1</p>
+</td>
+<td class="px-6 py-4 text-sm font-mono text-on-surface-variant">#P-90112</td>
+<td class="px-6 py-4 text-right text-xs text-on-surface-variant">12m ago</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-6 py-4">
+<p class="text-sm font-bold text-on-surface">Atorvastatin 20mg</p>
+<p class="text-[10px] text-on-surface-variant">Tablets • 30 Units</p>
+</td>
+<td class="px-6 py-4">
+<p class="text-xs font-medium text-on-surface-variant">B-4552</p>
+<p class="text-[10px] text-primary">Dispensed: 1</p>
+</td>
+<td class="px-6 py-4 text-sm font-mono text-on-surface-variant">#P-87220</td>
+<td class="px-6 py-4 text-right text-xs text-on-surface-variant">28m ago</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-6 py-4">
+<p class="text-sm font-bold text-on-surface">Paracetamol IP 500mg</p>
+<p class="text-[10px] text-on-surface-variant">Tablets • Batch Alert</p>
+</td>
+<td class="px-6 py-4">
+<p class="text-xs font-medium text-on-surface-variant">B-2047</p>
+<p class="text-[10px] text-error">Dispensed: 4</p>
+</td>
+<td class="px-6 py-4 text-sm font-mono text-on-surface-variant">#P-90224</td>
+<td class="px-6 py-4 text-right text-xs text-on-surface-variant">45m ago</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="px-6 py-4">
+<p class="text-sm font-bold text-on-surface">Ibuprofen 400mg</p>
+<p class="text-[10px] text-on-surface-variant">Liquid • 100ml</p>
+</td>
+<td class="px-6 py-4">
+<p class="text-xs font-medium text-on-surface-variant">B-1029</p>
+<p class="text-[10px] text-primary">Dispensed: 1</p>
+</td>
+<td class="px-6 py-4 text-sm font-mono text-on-surface-variant">#P-88001</td>
+<td class="px-6 py-4 text-right text-xs text-on-surface-variant">1h ago</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</div>
+<!-- Footer / Online indicator spacer -->
+<footer class="p-8 mt-auto flex items-center justify-between text-[10px] text-on-surface-variant border-t border-white/5">
+<div class="flex gap-4">
+<span>API STATUS: STABLE</span>
+<span>SECURE MODE: ENABLED</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>DATA SYNCED: JUST NOW</span>
+</div>
+</footer>
+</main>
+<!-- FAB for AI Chat (Hidden on small screens) -->
+<div class="fixed bottom-8 right-8 z-50">
+<button class="w-14 h-14 rounded-full liquid-gradient shadow-2xl flex items-center justify-center text-on-primary shadow-primary/40 hover:scale-110 active:scale-90 transition-all">
+<span class="material-symbols-outlined text-3xl" data-icon="forum">forum</span>
+</button>
+</div>
+</body></html>

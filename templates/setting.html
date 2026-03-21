@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pharmacy Settings | Caduceus UI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-secondary-container": "#00311f",
+              "on-error": "#690005",
+              "inverse-surface": "#dee1f7",
+              "on-secondary": "#003824",
+              "on-primary": "#002e6a",
+              "surface-container-lowest": "#090e1c",
+              "surface-container-low": "#161b2b",
+              "on-error-container": "#ffdad6",
+              "surface-dim": "#0e1322",
+              "on-primary-container": "#00285d",
+              "tertiary": "#ffb3ad",
+              "tertiary-fixed-dim": "#ffb3ad",
+              "on-background": "#dee1f7",
+              "secondary": "#4edea3",
+              "on-secondary-fixed-variant": "#005236",
+              "on-surface": "#dee1f7",
+              "primary-fixed-dim": "#adc6ff",
+              "secondary-fixed": "#6ffbbe",
+              "on-primary-fixed": "#001a42",
+              "primary-fixed": "#d8e2ff",
+              "surface-bright": "#343949",
+              "surface": "#0e1322",
+              "on-tertiary-fixed-variant": "#930013",
+              "on-tertiary-fixed": "#410004",
+              "secondary-container": "#00a572",
+              "surface-tint": "#adc6ff",
+              "outline": "#8c909f",
+              "surface-container-high": "#25293a",
+              "secondary-fixed-dim": "#4edea3",
+              "primary-container": "#4d8eff",
+              "tertiary-fixed": "#ffdad7",
+              "on-primary-fixed-variant": "#004395",
+              "inverse-on-surface": "#2b3040",
+              "surface-variant": "#2f3445",
+              "on-tertiary-container": "#5c0008",
+              "surface-highest": "#2f3445",
+              "on-tertiary": "#68000a",
+              "on-surface-variant": "#c2c6d6",
+              "primary": "#adc6ff",
+              "outline-variant": "#424754",
+              "inverse-primary": "#005ac2",
+              "tertiary-container": "#ff5451",
+              "surface-container": "#1a1f2f",
+              "error-container": "#93000a",
+              "error": "#ffb4ab",
+              "on-secondary-fixed": "#002113",
+              "background": "#0e1322"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #0a0f1e;
+            color: #dee1f7;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .liquid-gradient {
+            background: linear-gradient(135deg, #adc6ff 0%, #4d8eff 100%);
+        }
+        .orb {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(120px);
+            z-index: -1;
+            opacity: 0.15;
+        }
+        .orb-1 { top: -10%; right: -5%; background: #4d8eff; }
+        .orb-2 { bottom: -10%; left: -5%; background: #00a572; }
+    </style>
+</head>
+<body class="antialiased">
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<!-- SideNavBar Shell -->
+<aside class="fixed left-0 top-0 bottom-0 z-50 flex flex-col p-4 h-screen w-64 border-r border-white/10 bg-[#0a0f1e] bg-gradient-to-b from-white/5 to-transparent backdrop-blur-xl shadow-2xl shadow-black/40 font-['Inter'] antialiased text-sm font-medium tracking-tight">
+<div class="mb-8 px-2 flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg liquid-gradient flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-container text-lg" data-icon="local_pharmacy">local_pharmacy</span>
+</div>
+<h1 class="text-xl font-bold tracking-tighter text-[#adc6ff]">Caduceus UI</h1>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-[#c2c6d6] hover:bg-white/5 hover:backdrop-blur-md rounded-lg transition-colors active:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span>User Profile</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#adc6ff] bg-blue-500/10 rounded-lg transition-all duration-300 active:scale-[0.98]" href="#">
+<span class="material-symbols-outlined" data-icon="local_pharmacy">local_pharmacy</span>
+<span>Pharmacy Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#c2c6d6] hover:bg-white/5 hover:backdrop-blur-md rounded-lg transition-colors active:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="notifications_active">notifications_active</span>
+<span>Notifications</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#c2c6d6] hover:bg-white/5 hover:backdrop-blur-md rounded-lg transition-colors active:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="security">security</span>
+<span>Security</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#c2c6d6] hover:bg-white/5 hover:backdrop-blur-md rounded-lg transition-colors active:scale-[0.98] duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+<span>System Logs</span>
+</a>
+</nav>
+<div class="mt-auto pt-4 border-t border-white/5 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-[#c2c6d6] hover:bg-white/5 hover:backdrop-blur-md rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span>Help Center</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#ffb4ab] hover:bg-white/5 hover:backdrop-blur-md rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span>Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 min-h-screen relative">
+<!-- TopNavBar Shell -->
+<header class="sticky top-0 right-0 z-40 flex items-center justify-between px-8 w-full h-16 bg-[#0a0f1e]/80 backdrop-blur-2xl border-b border-white/5 font-['Inter'] text-sm tracking-wide uppercase font-semibold">
+<div class="flex items-center gap-8">
+<span class="text-[#adc6ff] tracking-widest">Pharmacy Settings</span>
+<nav class="hidden md:flex gap-6">
+<a class="text-[#c2c6d6] hover:text-white transition-opacity" href="#">Dashboard</a>
+<a class="text-[#c2c6d6] hover:text-white transition-opacity" href="#">Inventory</a>
+<a class="text-[#c2c6d6] hover:text-white transition-opacity" href="#">Orders</a>
+<a class="text-[#c2c6d6] hover:text-white transition-opacity" href="#">Reports</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-[#adc6ff] hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined" data-icon="sync_problem">sync_problem</span>
+</button>
+<button class="p-2 text-[#adc6ff] hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined" data-icon="settings_suggest">settings_suggest</span>
+</button>
+<img alt="User avatar" class="w-8 h-8 rounded-full border border-white/10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-dK_zP4FvqEqzU_4ieYFcRUeUiClKX-HQeMX54NtZeJ8kE_LgDyI0o1T-OL-6EOtO-p4z3qaDFwTqm7C9BeBT3sQ3NOuV39CtE5UeR4BWU7nfRyWV7GRdTQdUXh3WhFDUju-b1GJd9s-p_ZqCbTn7uazBChHS_KPR4mdsC_ozp0e6ibUBunhUGygAqWXhgJCgoiogoAGaTpfJEjseOxxMBdidLScG6X3ixNawr0hs-KQUvsiRZGoknE8nvG4TWWWZKqJf3QA3kD6M"/>
+</div>
+</header>
+<!-- Content Area -->
+<div class="p-8 max-w-6xl mx-auto space-y-8 pb-24">
+<!-- User Profile Section -->
+<section class="glass-panel rounded-xl p-8 border border-white/5 relative overflow-hidden">
+<div class="flex flex-col md:flex-row gap-8 items-start">
+<div class="relative group">
+<img alt="Pharmacist profile picture" class="w-32 h-32 rounded-2xl border-2 border-[#adc6ff]/20 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3lhqpwwLgPVG6KOZ_grdhhYkQeH2103_5gJvlk64pH_kHqZPr_Eb0widU4pfj_2_co9kQVhV1npJ_qD_rED5AC9XMTKjSOZpEIGXyUoSE0QNbBrChz1k9I_ODzeIefJSPl2Y-QvqHYsrdPuzGu17jNcNMJhqNY5E85l_v8VZ0yOdGx8fXWycdBX1Gv-XEudHHpykEhyYIrujkTX9jpq0Eq5EK2E7N6DdD1Mfo4YxG-u6ehV690ZTBsdgAF5gXzin8UgZo-LJn75WB"/>
+<div class="absolute inset-0 bg-black/40 rounded-2xl opacity-0 group-hover:opacity-100 flex items-center justify-center cursor-pointer transition-opacity">
+<span class="material-symbols-outlined text-white" data-icon="photo_camera">photo_camera</span>
+</div>
+</div>
+<div class="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+<div>
+<label class="block text-xs font-bold text-on-surface-variant mb-2 uppercase tracking-tighter">Full Name</label>
+<input class="w-full bg-white/5 border border-outline-variant/15 rounded-lg px-4 py-3 text-on-surface focus:border-primary/40 focus:ring-0 transition-all outline-none" type="text" value="Dr. Arjun Mehta"/>
+</div>
+<div>
+<label class="block text-xs font-bold text-on-surface-variant mb-2 uppercase tracking-tighter">Work Email</label>
+<input class="w-full bg-white/5 border border-outline-variant/15 rounded-lg px-4 py-3 text-on-surface focus:border-primary/40 focus:ring-0 transition-all outline-none" type="email" value="arjun.mehta@apollo.hospitals.in"/>
+</div>
+<div>
+<label class="block text-xs font-bold text-on-surface-variant mb-2 uppercase tracking-tighter">Role</label>
+<input class="w-full bg-white/5 border border-outline-variant/5 rounded-lg px-4 py-3 text-on-surface-variant/70 cursor-not-allowed" readonly="" type="text" value="Senior Pharmacist"/>
+</div>
+<div>
+<label class="block text-xs font-bold text-on-surface-variant mb-2 uppercase tracking-tighter">Hospital ID</label>
+<input class="w-full bg-white/5 border border-outline-variant/5 rounded-lg px-4 py-3 text-on-surface-variant/70 cursor-not-allowed" readonly="" type="text" value="HOSP-4920-APL"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Grid Layout for Sub-sections -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<!-- Store Settings -->
+<section class="glass-panel rounded-xl p-8 border border-white/5">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary" data-icon="store">store</span>
+<h2 class="text-lg font-bold text-primary">Store Settings</h2>
+</div>
+<div class="space-y-6">
+<div>
+<label class="block text-xs font-bold text-on-surface-variant mb-2 uppercase tracking-tighter">Store Name</label>
+<input class="w-full bg-white/5 border border-outline-variant/15 rounded-lg px-4 py-3 text-on-surface focus:border-primary/40 focus:ring-0 outline-none" type="text" value="Central Pharmacy - Block B"/>
+</div>
+<div>
+<label class="block text-xs font-bold text-on-surface-variant mb-2 uppercase tracking-tighter">Shelf Naming Convention</label>
+<select class="w-full bg-[#161b2b] border border-outline-variant/15 rounded-lg px-4 py-3 text-on-surface focus:border-primary/40 focus:ring-0 outline-none">
+<option>Aisle-Rack-Bin (A1-R12-B04)</option>
+<option>Alpha-Numeric (Zone-A-42)</option>
+</select>
+</div>
+<div>
+<label class="block text-xs font-bold text-on-surface-variant mb-2 uppercase tracking-tighter">Global Reorder Threshold</label>
+<div class="flex items-center gap-4">
+<input class="flex-1 accent-primary" type="range"/>
+<span class="text-sm font-mono text-primary">15%</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Security -->
+<section class="glass-panel rounded-xl p-8 border border-white/5">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary" data-icon="lock_open">lock_open</span>
+<h2 class="text-lg font-bold text-primary">Security</h2>
+</div>
+<div class="space-y-6">
+<div class="flex items-center justify-between p-4 bg-white/5 rounded-lg border border-white/5">
+<div>
+<h3 class="text-sm font-semibold text-on-surface">Two-Factor Authentication</h3>
+<p class="text-xs text-on-surface-variant">Enhanced protection for sensitive drug orders</p>
+</div>
+<button class="w-12 h-6 bg-secondary/20 rounded-full relative p-1 flex items-center transition-colors">
+<div class="w-4 h-4 bg-secondary rounded-full shadow-lg translate-x-6"></div>
+</button>
+</div>
+<div>
+<label class="block text-xs font-bold text-on-surface-variant mb-2 uppercase tracking-tighter">Current Password</label>
+<input class="w-full bg-white/5 border border-outline-variant/15 rounded-lg px-4 py-3 text-on-surface focus:border-primary/40 focus:ring-0 outline-none" placeholder="••••••••" type="password"/>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-xs font-bold text-on-surface-variant mb-2 uppercase tracking-tighter">New Password</label>
+<input class="w-full bg-white/5 border border-outline-variant/15 rounded-lg px-4 py-3 text-on-surface focus:border-primary/40 focus:ring-0 outline-none" type="password"/>
+</div>
+<div>
+<label class="block text-xs font-bold text-on-surface-variant mb-2 uppercase tracking-tighter">Confirm New</label>
+<input class="w-full bg-white/5 border border-outline-variant/15 rounded-lg px-4 py-3 text-on-surface focus:border-primary/40 focus:ring-0 outline-none" type="password"/>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Notifications Section -->
+<section class="glass-panel rounded-xl p-8 border border-white/5">
+<div class="flex items-center gap-3 mb-8">
+<span class="material-symbols-outlined text-primary" data-icon="notifications">notifications</span>
+<h2 class="text-lg font-bold text-primary">Notification Preferences</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="p-6 bg-white/5 rounded-xl border border-white/5 space-y-4">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-error" data-icon="crisis_alert">crisis_alert</span>
+<button class="w-10 h-5 bg-error/20 rounded-full relative p-1 flex items-center">
+<div class="w-3 h-3 bg-error rounded-full translate-x-5"></div>
+</button>
+</div>
+<div>
+<h4 class="text-sm font-bold uppercase tracking-tight">Critical Expiry</h4>
+<p class="text-xs text-on-surface-variant mt-1">Alerts for drugs expiring within 24-48 hours.</p>
+</div>
+</div>
+<div class="p-6 bg-white/5 rounded-xl border border-white/5 space-y-4">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-tertiary" data-icon="warning">warning</span>
+<button class="w-10 h-5 bg-tertiary/20 rounded-full relative p-1 flex items-center">
+<div class="w-3 h-3 bg-tertiary rounded-full translate-x-5"></div>
+</button>
+</div>
+<div>
+<h4 class="text-sm font-bold uppercase tracking-tight">Low Stock Warnings</h4>
+<p class="text-xs text-on-surface-variant mt-1">Daily digest of items below 20% inventory level.</p>
+</div>
+</div>
+<div class="p-6 bg-white/5 rounded-xl border border-white/5 space-y-4">
+<div class="flex justify-between items-start">
+<span class="material-symbols-outlined text-secondary" data-icon="check_circle">check_circle</span>
+<button class="w-10 h-5 bg-secondary/20 rounded-full relative p-1 flex items-center">
+<div class="w-3 h-3 bg-secondary rounded-full translate-x-5"></div>
+</button>
+</div>
+<div>
+<h4 class="text-sm font-bold uppercase tracking-tight">Reorder Confirmation</h4>
+<p class="text-xs text-on-surface-variant mt-1">Receipt of successful vendor purchase orders.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Actions & Footer -->
+<div class="flex items-center justify-between pt-8">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2 text-[10px] font-bold text-on-surface-variant/40 uppercase tracking-[0.2em]">
+<span class="w-2 h-2 rounded-full bg-secondary"></span> System Info
+                    </div>
+<div class="text-[11px] font-mono text-on-surface-variant/60 flex gap-4">
+<span>v2.8.4-stable</span>
+<span>Uptime: 142d 12h</span>
+<span>Mode: AES-256 SECURE</span>
+</div>
+</div>
+<div class="flex gap-4">
+<button class="px-6 py-2.5 text-sm font-bold text-on-surface-variant hover:text-on-surface transition-colors">Reset</button>
+<button class="px-8 py-2.5 rounded-lg liquid-gradient text-on-primary-container font-bold text-sm shadow-xl shadow-primary/20 active:scale-95 transition-transform duration-200">Save Changes</button>
+</div>
+</div>
+</div>
+</main>
+</body></html>
