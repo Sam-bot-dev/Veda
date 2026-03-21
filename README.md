@@ -205,7 +205,7 @@ Unlike traditional systems, Veda is:
         </div>
         <div><strong>🧩 Head Teammate</strong></div>
         <div><strong>Bhavesh</strong></div>
-        <a href="https://github.com/Sam-bot-dev">🌐 GitHub</a>
+        <a href="https://github.com/Sam-bot-dev">🌐 GitHub </a>
       </td>
       <td align="center" width="25%">
         <div>
