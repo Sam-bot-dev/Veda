@@ -68,6 +68,9 @@ Government hospital pharmacies often face:
 * Staff & role management
 * Full audit logs for compliance
 
+<p align="center">
+  <img src="static/assets/Architecture.png" width="80" />
+</p>
 ---
 
 ## 🤖 Intelligence Layer
