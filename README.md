@@ -194,14 +194,46 @@ Unlike traditional systems, Veda is:
 
 ---
 
-## 👨‍💻 Author
+## 👨‍💻 Contributors
 
-**Bhavesh Kumar**
-B.Tech CSE | AI, Robotics & Systems Developer
-📍 Gandhinagar, India
-
-* GitHub: https://github.com/Sam-bot-dev
-* LinkedIn: (Add your link)
+<p align="center">
+  <table>
+    <tr>
+      <td align="center" width="25%">
+        <div>
+          <img src="https://avatars.githubusercontent.com/Sam-bot-dev?s=120" width="120px;" height="120px;" alt="Bhavesh"/>
+        </div>
+        <div><strong>🧩 Head Teammate</strong></div>
+        <div><strong>Bhavesh</strong></div>
+        <a href="https://github.com/Sam-bot-dev">🌐 GitHub</a>
+      </td>
+      <td align="center" width="25%">
+        <div>
+          <img src="https://avatars.githubusercontent.com/notUbaid?s=120" width="120px;" height="120px;" alt="Ubaid khan"/>
+        </div>
+        <div><strong>⭐ Team Leader</strong></div>
+        <div><strong>Ubaid khan</strong></div>
+        <a href="https://github.com/niyatijoshi707-ai">🌐 GitHub</a>
+      </td>
+      <td align="center" width="25%">
+        <div>
+          <img src="https://avatars.githubusercontent.com/rhn9999?s=120" width="120px;" height="120px;" alt="Rohan"/>
+        </div>
+        <div><strong>Teammate</strong></div>
+        <div><strong>Kush</strong></div>
+        <a href="https://github.com/rhn9999">🌐 GitHub</a>
+      </td>
+      <td align="center" width="25%">
+        <div>
+          <img src="https://avatars.githubusercontent.com/rhn9999?s=120" width="120px;" height="120px;" alt="Rohan"/>
+        </div>
+        <div><strong>Teammate</strong></div>
+        <div><strong>Yug</strong></div>
+        <a href="https://github.com/rhn9999">🌐 GitHub</a>
+      </td>
+    </tr>
+  </table>
+</p>
 
 ---
 
