@@ -15,5 +15,8 @@ def dashboard():
 def inventory():
     return render_template('inventory.html')
 # admin
+@app.route('/admin')
+def admin():
+    return render_template()
 # notifications
 # emails
