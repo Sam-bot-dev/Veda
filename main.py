@@ -1,5 +1,5 @@
-from flask import Flask, render_template
-
+from flask import Flask, render_template, jsonify
+from intelligence.forecast import forecast_usage
 app = Flask(__name__)
 
 @app.route('/')
@@ -42,6 +42,20 @@ def setting():
     return render_template('setting.html')
 # emails
 
+# Dummy data (replace with Firestore later)
+data_store = {
+    "Paracetamol": [10,12,15,13,18,20,22],
+    "Ibuprofen": [5,6,7,6,8,9,10]
+}
 
+@app.route("/forecast/<medicine>")
+def forecast(medicine):
+    data = data_store.get(medicine, [])
+    result = forecast_usage(data)
+
+    return jsonify({
+        "medicine": medicine,
+        "forecast": result
+    })
 if __name__=="__main__":
     app.run(debug=True)

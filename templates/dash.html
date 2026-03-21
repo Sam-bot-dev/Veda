@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Veda Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+body {
+  font-family: Arial;
+  margin: 0;
+  background: #f4f6f8;
+}
+
+.header {
+  background: white;
+  padding: 15px;
+  font-weight: bold;
+  border-bottom: 1px solid #ddd;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  padding: 15px;
+}
+
+.card {
+  background: white;
+  padding: 15px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+h3 {
+  margin-top: 0;
+}
+
+/* TABLE */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+td, th {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* METRICS */
+.metrics {
+  display: flex;
+  justify-content: space-between;
+}
+
+.metric {
+  background: #f1f5f9;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  flex: 1;
+  margin: 5px;
+}
+
+/* BUTTON */
+button {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+/* ROLE */
+.role {
+  float: right;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  Veda Dashboard
+  <select class="role" onchange="changeRole(this.value)">
+    <option value="pharma">Pharmacist</option>
+    <option value="manager">Manager</option>
+    <option value="admin">Admin</option>
+  </select>
+</div>
+
+<div class="container">
+
+  <!-- METRICS -->
+  <div class="card">
+    <h3>Inventory Metrics</h3>
+    <div class="metrics">
+      <div class="metric">Stock: <span id="stock">0</span></div>
+      <div class="metric">Low: <span id="low">0</span></div>
+      <div class="metric">Expiry: <span id="expiry">0</span></div>
+    </div>
+  </div>
+
+  <!-- PIE -->
+  <div class="card">
+    <h3>Category Distribution</h3>
+    <canvas id="pie"></canvas>
+  </div>
+
+  <!-- TABLE -->
+  <div class="card">
+    <h3>Inventory</h3>
+    <table id="table"></table>
+  </div>
+
+  <!-- BAR -->
+  <div class="card">
+    <h3>Usage Trend</h3>
+    <canvas id="bar"></canvas>
+  </div>
+
+</div>
+
+<script>
+let role = "pharma";
+
+// 🧠 Simulated Database (replace with Firestore later)
+let db = [
+  {name:"Paracetamol", category:"Tablet", stock:20},
+  {name:"Ibuprofen", category:"Tablet", stock:5},
+  {name:"Amoxicillin", category:"Capsule", stock:100}
+];
+
+// ROLE CONTROL
+function changeRole(r){
+  role = r;
+  render();
+}
+
+// RENDER TABLE
+function render(){
+  let table = "<tr><th>Name</th><th>Category</th><th>Stock</th>";
+  if(role === "pharma") table += "<th>Action</th>";
+  table += "</tr>";
+
+  db.forEach((d,i)=>{
+    table += `<tr>
+      <td>${d.name}</td>
+      <td>${d.category}</td>
+      <td>${d.stock}</td>`;
+
+    if(role === "pharma"){
+      table += `<td>
+        <button onclick="updateStock(${i},-1)">-</button>
+        <button onclick="updateStock(${i},1)">+</button>
+      </td>`;
+    }
+
+    table += "</tr>";
+  });
+
+  document.getElementById("table").innerHTML = table;
+
+  updateMetrics();
+  updateCharts();
+}
+
+// UPDATE STOCK (WRITE ONLY PHARMA)
+function updateStock(i,val){
+  if(role !== "pharma"){
+    alert("Read-only access!");
+    return;
+  }
+
+  db[i].stock += val;
+  if(db[i].stock < 0) db[i].stock = 0;
+
+  render();
+}
+
+// METRICS
+function updateMetrics(){
+  let total = 0, low = 0, exp = 0;
+
+  db.forEach(d=>{
+    total += d.stock;
+    if(d.stock < 10) low++;
+    if(d.stock < 5) exp++;
+  });
+
+  document.getElementById("stock").innerText = total;
+  document.getElementById("low").innerText = low;
+  document.getElementById("expiry").innerText = exp;
+}
+
+// CHARTS
+let pieChart, barChart;
+
+function updateCharts(){
+
+  let categories = {};
+  db.forEach(d=>{
+    categories[d.category] = (categories[d.category] || 0) + d.stock;
+  });
+
+  let labels = Object.keys(categories);
+  let values = Object.values(categories);
+
+  if(pieChart) pieChart.destroy();
+  pieChart = new Chart(document.getElementById("pie"), {
+    type: "pie",
+    data: {
+      labels: labels,
+      datasets: [{data: values}]
+    }
+  });
+
+  if(barChart) barChart.destroy();
+  barChart = new Chart(document.getElementById("bar"), {
+    type: "bar",
+    data: {
+      labels: db.map(d=>d.name),
+      datasets: [{
+        label: "Stock",
+        data: db.map(d=>d.stock)
+      }]
+    }
+  });
+}
+
+// AUTO LIVE UPDATE (simulate real-time DB)
+setInterval(()=>{
+  db.forEach(d=>{
+    d.stock += Math.floor(Math.random()*3 - 1);
+    if(d.stock < 0) d.stock = 0;
+  });
+  render();
+}, 5000);
+
+// INIT
+render();
+</script>
+
+</body>
+</html>
