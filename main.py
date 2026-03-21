@@ -41,5 +41,7 @@ def inventry():
 def setting():
     return render_template('setting.html')
 # emails
+
+
 if __name__=="__main__":
     app.run(debug=True)
