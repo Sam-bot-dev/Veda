@@ -69,7 +69,7 @@ Government hospital pharmacies often face:
 * Full audit logs for compliance
 
 <p align="center">
-  <img src="static/assets/Architecture.png" width="80" />
+  <img src="static/assets/Architecture.png" />
 </p>
 ---
 
