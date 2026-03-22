@@ -228,11 +228,11 @@ Unlike traditional systems, Veda is:
       </td>
       <td align="center" width="25%">
         <div>
-          <img src="https://avatars.githubusercontent.com/rhn9999?s=120" width="120px;" height="120px;" alt="Rohan"/>
+          <img src="https://avatars.githubusercontent.com/yuggandhii?s=120" width="120px;" height="120px;" alt="Yug"/>
         </div>
-        <div><strong>Teammate</strong></div>
+        <div><strong>🗄️ Database Head</strong></div>
         <div><strong>Yug</strong></div>
-        <a href="https://github.com/rhn9999">🌐 GitHub</a>
+        <a href="https://github.com/yuggandhii">🌐 GitHub</a>
       </td>
     </tr>
   </table>
