@@ -13,7 +13,7 @@ Smart Pharmacy Intelligence. Real-time tracking, AI-driven expiry alerts, and op
 
 **Veda** is a next-generation **AI-powered hospital pharmacy management system** designed to eliminate drug wastage, prevent stockouts, and optimize inventory across government healthcare systems.
 
-Built with real-world hospital workflows in mind, Veda ensures:
+Built with real world hospital workflows in mind, Veda ensures:
 
 * **Zero expired medicines**
 * **Smart inventory tracking**
