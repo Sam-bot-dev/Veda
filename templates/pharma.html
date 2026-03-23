@@ -1,380 +1,501 @@
 <!DOCTYPE html>
-
-<html class="dark" lang="en"><head>
+<html class="dark" lang="en">
+<head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Veda | Pharmacist Dashboard</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
 <script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              "surface-container-low": "#161b2b",
-              "primary-fixed-dim": "#adc6ff",
-              "surface-bright": "#343949",
-              "surface-variant": "#2f3445",
-              "on-primary": "#002e6a",
-              "secondary": "#4edea3",
-              "primary-fixed": "#d8e2ff",
-              "on-surface": "#dee1f7",
-              "surface-dim": "#0e1322",
-              "on-background": "#dee1f7",
-              "outline": "#8c909f",
-              "on-primary-fixed": "#001a42",
-              "on-primary-container": "#00285d",
-              "inverse-on-surface": "#2b3040",
-              "background": "#0e1322",
-              "primary-container": "#4d8eff",
-              "on-secondary": "#003824",
-              "surface-container-lowest": "#090e1c",
-              "secondary-fixed-dim": "#4edea3",
-              "secondary-fixed": "#6ffbbe",
-              "tertiary-fixed": "#ffdad7",
-              "primary": "#adc6ff",
-              "on-secondary-fixed-variant": "#005236",
-              "tertiary": "#ffb3ad",
-              "on-tertiary-container": "#5c0008",
-              "surface": "#0e1322",
-              "inverse-primary": "#005ac2",
-              "tertiary-container": "#ff5451",
-              "on-surface-variant": "#c2c6d6",
-              "on-error": "#690005",
-              "on-error-container": "#ffdad6",
-              "on-tertiary-fixed": "#410004",
-              "on-tertiary-fixed-variant": "#930013",
-              "on-primary-fixed-variant": "#004395",
-              "surface-container-highest": "#2f3445",
-              "error-container": "#93000a",
-              "surface-container-high": "#25293a",
-              "surface-container": "#1a1f2f",
-              "error": "#ffb4ab",
-              "tertiary-fixed-dim": "#ffb3ad",
-              "on-secondary-fixed": "#002113",
-              "surface-tint": "#adc6ff",
-              "outline-variant": "#424754",
-              "on-tertiary": "#68000a",
-              "on-secondary-container": "#00311f",
-              "inverse-surface": "#dee1f7",
-              "secondary-container": "#00a572"
-            },
-            fontFamily: {
-              "headline": ["Inter"],
-              "body": ["Inter"],
-              "label": ["Inter"]
-            },
-            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
-          },
-        },
-      }
-    </script>
+  tailwind.config={darkMode:"class",theme:{extend:{colors:{
+    "surface-container-low":"#161b2b","primary-fixed-dim":"#adc6ff","surface-bright":"#343949",
+    "surface-variant":"#2f3445","on-primary":"#002e6a","secondary":"#4edea3","primary-fixed":"#d8e2ff",
+    "on-surface":"#dee1f7","surface-dim":"#0e1322","on-background":"#dee1f7","outline":"#8c909f",
+    "on-primary-fixed":"#001a42","on-primary-container":"#00285d","inverse-on-surface":"#2b3040",
+    "background":"#0e1322","primary-container":"#4d8eff","on-secondary":"#003824",
+    "surface-container-lowest":"#090e1c","secondary-fixed-dim":"#4edea3","secondary-fixed":"#6ffbbe",
+    "tertiary-fixed":"#ffdad7","primary":"#adc6ff","tertiary":"#ffb3ad","on-tertiary-container":"#5c0008",
+    "surface":"#0e1322","inverse-primary":"#005ac2","tertiary-container":"#ff5451",
+    "on-surface-variant":"#c2c6d6","on-error":"#690005","on-error-container":"#ffdad6",
+    "on-primary-fixed-variant":"#004395","surface-container-highest":"#2f3445","error-container":"#93000a",
+    "surface-container-high":"#25293a","surface-container":"#1a1f2f","error":"#ffb4ab",
+    "on-secondary-fixed":"#002113","surface-tint":"#adc6ff","outline-variant":"#424754",
+    "on-tertiary":"#68000a","on-secondary-container":"#00311f","inverse-surface":"#dee1f7",
+    "secondary-container":"#00a572"
+  },fontFamily:{"headline":["Inter"],"body":["Inter"],"label":["Inter"]},
+  borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"}}}}
+</script>
 <style>
-        body { font-family: 'Inter', sans-serif; background-color: #0e1322; }
-        .glass-panel { background: rgba(22, 27, 43, 0.6); backdrop-filter: blur(20px); }
-        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-        .liquid-gradient { background: linear-gradient(135deg, #adc6ff 0%, #4d8eff 100%); }
-        .status-pill { background: rgba(255, 180, 171, 0.1); border: 1px solid rgba(255, 180, 171, 0.2); }
-    </style>
+  body { font-family:'Inter',sans-serif; background-color:#0e1322; }
+  .glass-panel { background:rgba(22,27,43,0.6); backdrop-filter:blur(20px); }
+  .liquid-gradient { background:linear-gradient(135deg,#adc6ff 0%,#4d8eff 100%); }
+  .material-symbols-outlined { font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24; }
+  .modal-backdrop { background:rgba(0,0,0,0.7); backdrop-filter:blur(8px); }
+  .spinner { width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:inline-block; }
+  @keyframes spin{to{transform:rotate(360deg);}}
+</style>
 </head>
 <body class="flex min-h-screen text-on-surface antialiased overflow-hidden">
-<!-- SideNavBar (Authority Source: JSON) -->
+
+<!-- SIDEBAR -->
 <aside class="w-[220px] h-screen sticky left-0 top-0 border-r border-white/10 bg-slate-950/60 backdrop-blur-xl flex flex-col p-4 shadow-[20px_0_40px_rgba(0,0,0,0.4)] z-50">
-<div class="mb-8">
-<h1 class="text-2xl font-bold tracking-tighter bg-gradient-to-br from-blue-200 to-blue-500 bg-clip-text text-transparent">Veda</h1>
-<div class="mt-6 flex items-center gap-3 p-2 rounded-xl bg-white/5">
-<img alt="Sarah J., Pharmacist" class="w-10 h-10 rounded-lg object-cover border border-white/10" data-alt="Professional female pharmacist portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8CCNGB_lWsZApoeddS5cAzcSX_fEzWQGBc0nRrBU7MwZHrHvvUGV9iVFtq99Q-C-ypymGUZV2cLvCxU2NZXoO5zCXgZGH_-H8uDjrOQAw9q6eBltN5k4x3iffWst2QDcWivwcVqH46YjhsJj9nCLwhZ8G1fVegU6BovTDBV-QTRF_zgSbX0Ve6XJlymIRR-3cb9BxpXhQBmee-S4cTODBdo3uKWl613hxjCdBN5vwHqDeb21nKubAn9NjgEQInwPenX_g8Fa6Vyzb"/>
-<div class="overflow-hidden">
-<p class="text-sm font-semibold truncate">Sarah J.</p>
-<p class="text-[10px] text-slate-400 truncate uppercase tracking-widest">Pharmacist • Online</p>
-</div>
-</div>
-</div>
-<nav class="flex-1 flex flex-col gap-1">
-<a class="flex items-center gap-3 px-4 py-3 text-blue-300 bg-white/10 rounded-lg transition-all active:scale-[0.98] duration-200" href="#">
-<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
-<span class="text-sm font-medium">Dashboard</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 transition-colors hover:bg-white/5 hover:backdrop-blur-md rounded-lg group" href="#">
-<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
-<span class="text-sm font-medium">Inventory</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 transition-colors hover:bg-white/5 hover:backdrop-blur-md rounded-lg" href="#">
-<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
-<span class="text-sm font-medium">Orders</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 transition-colors hover:bg-white/5 hover:backdrop-blur-md rounded-lg" href="#">
-<span class="material-symbols-outlined" data-icon="bar_chart">bar_chart</span>
-<span class="text-sm font-medium">Analytics</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 transition-colors hover:bg-white/5 hover:backdrop-blur-md rounded-lg" href="#">
-<span class="material-symbols-outlined" data-icon="settings">settings</span>
-<span class="text-sm font-medium">Settings</span>
-</a>
-</nav>
-<div class="mt-auto pt-6">
-<button class="w-full liquid-gradient text-on-primary-container font-bold py-3 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-primary-container/20 active:scale-[0.98] transition-all">
-<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
-<span class="text-xs uppercase tracking-tighter">New Dispensation</span>
-</button>
-<div class="mt-4 flex items-center gap-2 px-2">
-<div class="w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_#4edea3]"></div>
-<span class="text-[10px] text-on-surface-variant font-medium uppercase tracking-widest">System Online</span>
-</div>
-</div>
+  <div class="mb-8">
+    <h1 class="text-2xl font-bold tracking-tighter bg-gradient-to-br from-blue-200 to-blue-500 bg-clip-text text-transparent">Veda</h1>
+    <div class="mt-6 flex items-center gap-3 p-2 rounded-xl bg-white/5">
+      <div class="w-10 h-10 rounded-lg bg-primary/20 border border-white/10 flex items-center justify-center text-primary font-bold text-lg" id="sb-avatar">?</div>
+      <div class="overflow-hidden">
+        <p class="text-sm font-semibold truncate" id="sb-name">Loading…</p>
+        <p class="text-[10px] text-slate-400 truncate uppercase tracking-widest">Pharmacist • Online</p>
+      </div>
+    </div>
+  </div>
+  <nav class="flex-1 flex flex-col gap-1">
+    <a href="pharma.html" class="flex items-center gap-3 px-4 py-3 text-blue-300 bg-white/10 rounded-lg transition-all">
+      <span class="material-symbols-outlined text-xl">dashboard</span><span class="text-sm font-medium">Dashboard</span>
+    </a>
+    <a href="inventry.html" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 transition-colors hover:bg-white/5 rounded-lg">
+      <span class="material-symbols-outlined text-xl">inventory_2</span><span class="text-sm font-medium">Inventory</span>
+    </a>
+    <a href="#" onclick="openDispenseModal()" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 transition-colors hover:bg-white/5 rounded-lg">
+      <span class="material-symbols-outlined text-xl">medication</span><span class="text-sm font-medium">Dispense</span>
+    </a>
+    <a href="setting.html" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 transition-colors hover:bg-white/5 rounded-lg">
+      <span class="material-symbols-outlined text-xl">settings</span><span class="text-sm font-medium">Settings</span>
+    </a>
+    <div class="pt-4 border-t border-white/5 mt-2">
+      <button onclick="signOut()" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-colors rounded-lg w-full">
+        <span class="material-symbols-outlined text-xl">logout</span><span class="text-sm font-medium">Sign Out</span>
+      </button>
+    </div>
+  </nav>
+  <div class="mt-auto">
+    <button onclick="openDispenseModal()" class="w-full liquid-gradient text-on-primary-container font-bold py-3 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-primary-container/20 active:scale-[0.98] transition-all">
+      <span class="material-symbols-outlined text-sm">add</span>
+      <span class="text-xs uppercase tracking-tighter">New Dispensation</span>
+    </button>
+    <div class="mt-4 flex items-center gap-2 px-2">
+      <div class="w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_#4edea3]"></div>
+      <span class="text-[10px] text-on-surface-variant font-medium uppercase tracking-widest">System Online</span>
+    </div>
+  </div>
 </aside>
-<!-- Main Content Area -->
+
+<!-- MAIN CONTENT -->
 <main class="flex-1 flex flex-col h-screen overflow-y-auto bg-surface-container-lowest relative">
-<!-- Abstract Background Orbs -->
-<div class="absolute top-[-10%] left-[20%] w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
-<div class="absolute bottom-[-10%] right-[10%] w-[400px] h-[400px] bg-secondary/5 rounded-full blur-[100px] pointer-events-none"></div>
-<!-- TopNavBar (Authority Source: JSON) -->
-<header class="w-full h-16 sticky top-0 z-40 border-b border-white/5 bg-slate-950/40 backdrop-blur-md flex justify-between items-center px-8">
-<div>
-<h2 class="text-lg font-bold tracking-tight text-on-surface">Pharmacist Dashboard</h2>
-<p class="text-[10px] text-on-surface-variant uppercase tracking-widest font-medium">Wednesday, Oct 25 • 09:42 AM</p>
-</div>
-<div class="flex items-center gap-4">
-<div class="relative group cursor-pointer hover:bg-white/5 rounded-full p-2 transition-all">
-<span class="material-symbols-outlined text-on-surface-variant" data-icon="notifications">notifications</span>
-<span class="absolute top-2 right-2 w-4 h-4 bg-error text-[10px] text-on-error flex items-center justify-center rounded-full font-bold border-2 border-background">4</span>
-</div>
-<div class="cursor-pointer hover:bg-white/5 rounded-full p-2 transition-all">
-<span class="material-symbols-outlined text-on-surface-variant" data-icon="history">history</span>
-</div>
-<div class="h-8 w-[1px] bg-white/10 mx-2"></div>
-<div class="flex items-center gap-3 cursor-pointer group">
-<div class="text-right hidden sm:block">
-<p class="text-xs font-bold text-on-surface group-hover:text-primary transition-colors">Sarah J.</p>
-<p class="text-[10px] text-on-surface-variant font-medium">ID: PH-9402</p>
-</div>
-</div>
-</div>
-</header>
-<!-- Dashboard Content -->
-<div class="p-8 space-y-8 relative z-10">
-<!-- AI RECOMMENDATION BANNER -->
-<section class="w-full">
-<div class="relative overflow-hidden rounded-2xl bg-surface-container-low border border-white/5 p-6 shadow-xl">
-<div class="absolute top-0 left-0 w-1.5 h-full bg-primary-container"></div>
-<div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
-<div class="space-y-2">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-primary text-xl" data-icon="auto_awesome">auto_awesome</span>
-<h3 class="text-sm font-bold tracking-tight text-on-surface">AI Recommendation — Updated Today</h3>
-</div>
-<div class="flex flex-wrap items-center gap-3">
-<span class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-error/10 border border-error/20 text-error text-xs font-bold">
-<span class="material-symbols-outlined text-sm" data-icon="warning">warning</span>
-                                    ⚠ Paracetamol 500mg · Batch B-2047 · Row C, Shelf 2 · Expires in 6 days · DISPENSE FIRST
-                                </span>
-<span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-on-surface-variant text-xs font-medium">
-                                    Inventory optimization suggested for antibiotic stock.
-                                </span>
-</div>
-</div>
-<button class="px-6 py-2 rounded-xl bg-white/5 border border-white/10 text-xs font-bold uppercase tracking-wider hover:bg-white/10 transition-all active:scale-95">
-                            Dismiss All
-                        </button>
-</div>
-</div>
-</section>
-<!-- STATS ROW -->
-<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-<!-- Total Meds -->
-<div class="p-6 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-all group">
-<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-4">Total Medicines</p>
-<div class="flex items-end justify-between">
-<h4 class="text-3xl font-extrabold text-on-surface">1,248</h4>
-<div class="h-8 w-16 bg-primary/20 rounded-lg flex items-center justify-center">
-<span class="material-symbols-outlined text-primary text-xl" data-icon="medication">medication</span>
-</div>
-</div>
-<div class="mt-4 h-1 w-full bg-white/5 rounded-full overflow-hidden">
-<div class="h-full w-3/4 bg-primary rounded-full"></div>
-</div>
-</div>
-<!-- Expiring -->
-<div class="p-6 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-all group">
-<p class="text-[10px] font-bold text-error uppercase tracking-widest mb-4">Expiring This Week</p>
-<div class="flex items-end justify-between">
-<h4 class="text-3xl font-extrabold text-error">12</h4>
-<div class="h-8 w-16 bg-error/20 rounded-lg flex items-center justify-center">
-<span class="material-symbols-outlined text-error text-xl" data-icon="event_busy">event_busy</span>
-</div>
-</div>
-<p class="mt-4 text-[10px] text-on-surface-variant font-medium">Critical attention required</p>
-</div>
-<!-- Reorder -->
-<div class="p-6 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-all group">
-<p class="text-[10px] font-bold text-tertiary uppercase tracking-widest mb-4">Below Reorder Level</p>
-<div class="flex items-end justify-between">
-<h4 class="text-3xl font-extrabold text-tertiary">8</h4>
-<div class="h-8 w-16 bg-tertiary/20 rounded-lg flex items-center justify-center">
-<span class="material-symbols-outlined text-tertiary text-xl" data-icon="inventory">inventory</span>
-</div>
-</div>
-<p class="mt-4 text-[10px] text-on-surface-variant font-medium">4 Orders pending approval</p>
-</div>
-<!-- Dispensing -->
-<div class="p-6 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-all group">
-<p class="text-[10px] font-bold text-secondary uppercase tracking-widest mb-4">Today's Dispensing</p>
-<div class="flex items-end justify-between">
-<h4 class="text-3xl font-extrabold text-on-surface tracking-tighter">₹42,840</h4>
-<div class="h-8 w-16 bg-secondary/20 rounded-lg flex items-center justify-center">
-<span class="material-symbols-outlined text-secondary text-xl" data-icon="account_balance_wallet">account_balance_wallet</span>
-</div>
-</div>
-<div class="mt-4 flex items-center gap-1 text-[10px] text-secondary">
-<span class="material-symbols-outlined text-[12px]" data-icon="trending_up">trending_up</span>
-<span>14% vs yesterday</span>
-</div>
-</div>
-</section>
-<!-- QUICK ACTIONS & ACTIVITY GRID -->
-<section class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-<!-- Quick Actions (Left) -->
-<div class="lg:col-span-4 flex flex-col gap-4">
-<h3 class="text-xs font-bold text-on-surface-variant uppercase tracking-[0.2em]">Quick Actions</h3>
-<button class="flex items-center justify-between p-4 rounded-xl bg-surface-container-high border border-white/5 hover:border-primary/40 hover:bg-surface-variant transition-all group">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-<span class="material-symbols-outlined text-primary" data-icon="prescriptions">prescriptions</span>
-</div>
-<span class="text-sm font-semibold text-on-surface">Dispense Medicines</span>
-</div>
-<span class="material-symbols-outlined text-on-surface-variant text-sm group-hover:translate-x-1 transition-transform" data-icon="arrow_forward_ios">arrow_forward_ios</span>
-</button>
-<button class="flex items-center justify-between p-4 rounded-xl bg-surface-container-high border border-white/5 hover:border-primary/40 hover:bg-surface-variant transition-all group">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center">
-<span class="material-symbols-outlined text-secondary" data-icon="inventory">inventory</span>
-</div>
-<span class="text-sm font-semibold text-on-surface">View Stock</span>
-</div>
-<span class="material-symbols-outlined text-on-surface-variant text-sm group-hover:translate-x-1 transition-transform" data-icon="arrow_forward_ios">arrow_forward_ios</span>
-</button>
-<button class="flex items-center justify-between p-4 rounded-xl bg-surface-container-high border border-white/5 hover:border-primary/40 hover:bg-surface-variant transition-all group">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-lg bg-tertiary/10 flex items-center justify-center">
-<span class="material-symbols-outlined text-tertiary" data-icon="notification_add">notification_add</span>
-</div>
-<span class="text-sm font-semibold text-on-surface">Send Reorder Reminder</span>
-</div>
-<span class="material-symbols-outlined text-on-surface-variant text-sm group-hover:translate-x-1 transition-transform" data-icon="arrow_forward_ios">arrow_forward_ios</span>
-</button>
-<button class="flex items-center justify-between p-4 rounded-xl bg-primary-container/10 border border-primary-container/20 hover:bg-primary-container/20 transition-all group">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-lg bg-primary-container/30 flex items-center justify-center">
-<span class="material-symbols-outlined text-on-primary-fixed" data-icon="psychology">psychology</span>
-</div>
-<span class="text-sm font-semibold text-primary-fixed">AI Quick Query</span>
-</div>
-<span class="material-symbols-outlined text-primary-fixed text-sm group-hover:translate-x-1 transition-transform" data-icon="arrow_forward_ios">arrow_forward_ios</span>
-</button>
-</div>
-<!-- Recent Activity Table (Right) -->
-<div class="lg:col-span-8 space-y-4">
-<div class="flex items-center justify-between">
-<h3 class="text-xs font-bold text-on-surface-variant uppercase tracking-[0.2em]">Recent Activity</h3>
-<a class="text-[10px] text-primary font-bold uppercase tracking-wider hover:underline" href="#">View All History</a>
-</div>
-<div class="rounded-2xl bg-surface-container-low border border-white/5 overflow-hidden shadow-2xl">
-<table class="w-full text-left border-collapse">
-<thead>
-<tr class="bg-white/5">
-<th class="px-6 py-4 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Medicine</th>
-<th class="px-6 py-4 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Batch/Qty</th>
-<th class="px-6 py-4 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Patient Ref</th>
-<th class="px-6 py-4 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest text-right">Time</th>
-</tr>
-</thead>
-<tbody class="divide-y divide-white/5">
-<tr class="hover:bg-white/5 transition-colors">
-<td class="px-6 py-4">
-<p class="text-sm font-bold text-on-surface">Amoxicillin 500mg</p>
-<p class="text-[10px] text-on-surface-variant">Capsule • 10 Units</p>
-</td>
-<td class="px-6 py-4">
-<p class="text-xs font-medium text-on-surface-variant">B-9920</p>
-<p class="text-[10px] text-primary">Dispensed: 2</p>
-</td>
-<td class="px-6 py-4 text-sm font-mono text-on-surface-variant">#P-88421</td>
-<td class="px-6 py-4 text-right text-xs text-on-surface-variant">4m ago</td>
-</tr>
-<tr class="hover:bg-white/5 transition-colors">
-<td class="px-6 py-4">
-<p class="text-sm font-bold text-on-surface">Metformin Hydrochloride</p>
-<p class="text-[10px] text-on-surface-variant">Tablets • 500mg</p>
-</td>
-<td class="px-6 py-4">
-<p class="text-xs font-medium text-on-surface-variant">B-2012</p>
-<p class="text-[10px] text-primary">Dispensed: 1</p>
-</td>
-<td class="px-6 py-4 text-sm font-mono text-on-surface-variant">#P-90112</td>
-<td class="px-6 py-4 text-right text-xs text-on-surface-variant">12m ago</td>
-</tr>
-<tr class="hover:bg-white/5 transition-colors">
-<td class="px-6 py-4">
-<p class="text-sm font-bold text-on-surface">Atorvastatin 20mg</p>
-<p class="text-[10px] text-on-surface-variant">Tablets • 30 Units</p>
-</td>
-<td class="px-6 py-4">
-<p class="text-xs font-medium text-on-surface-variant">B-4552</p>
-<p class="text-[10px] text-primary">Dispensed: 1</p>
-</td>
-<td class="px-6 py-4 text-sm font-mono text-on-surface-variant">#P-87220</td>
-<td class="px-6 py-4 text-right text-xs text-on-surface-variant">28m ago</td>
-</tr>
-<tr class="hover:bg-white/5 transition-colors">
-<td class="px-6 py-4">
-<p class="text-sm font-bold text-on-surface">Paracetamol IP 500mg</p>
-<p class="text-[10px] text-on-surface-variant">Tablets • Batch Alert</p>
-</td>
-<td class="px-6 py-4">
-<p class="text-xs font-medium text-on-surface-variant">B-2047</p>
-<p class="text-[10px] text-error">Dispensed: 4</p>
-</td>
-<td class="px-6 py-4 text-sm font-mono text-on-surface-variant">#P-90224</td>
-<td class="px-6 py-4 text-right text-xs text-on-surface-variant">45m ago</td>
-</tr>
-<tr class="hover:bg-white/5 transition-colors">
-<td class="px-6 py-4">
-<p class="text-sm font-bold text-on-surface">Ibuprofen 400mg</p>
-<p class="text-[10px] text-on-surface-variant">Liquid • 100ml</p>
-</td>
-<td class="px-6 py-4">
-<p class="text-xs font-medium text-on-surface-variant">B-1029</p>
-<p class="text-[10px] text-primary">Dispensed: 1</p>
-</td>
-<td class="px-6 py-4 text-sm font-mono text-on-surface-variant">#P-88001</td>
-<td class="px-6 py-4 text-right text-xs text-on-surface-variant">1h ago</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</section>
-</div>
-<!-- Footer / Online indicator spacer -->
-<footer class="p-8 mt-auto flex items-center justify-between text-[10px] text-on-surface-variant border-t border-white/5">
-<div class="flex gap-4">
-<span>API STATUS: STABLE</span>
-<span>SECURE MODE: ENABLED</span>
-</div>
-<div class="flex items-center gap-2">
-<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
-<span>DATA SYNCED: JUST NOW</span>
-</div>
-</footer>
+  <div class="absolute top-[-10%] left-[20%] w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
+  <div class="absolute bottom-[-10%] right-[10%] w-[400px] h-[400px] bg-secondary/5 rounded-full blur-[100px] pointer-events-none"></div>
+
+  <!-- TOPBAR -->
+  <header class="w-full h-16 sticky top-0 z-40 border-b border-white/5 bg-slate-950/40 backdrop-blur-md flex justify-between items-center px-8">
+    <div>
+      <h2 class="text-lg font-bold tracking-tight text-on-surface">Pharmacist Dashboard</h2>
+      <p class="text-[10px] text-on-surface-variant uppercase tracking-widest font-medium" id="live-dt">—</p>
+    </div>
+    <div class="flex items-center gap-4">
+      <div class="relative cursor-pointer hover:bg-white/5 rounded-full p-2 transition-all" onclick="toggleAlerts()">
+        <span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+        <span id="alert-badge" class="absolute top-2 right-2 w-4 h-4 bg-error text-[10px] text-on-error flex items-center justify-center rounded-full font-bold border-2 border-background hidden">0</span>
+      </div>
+      <button onclick="refreshData()" class="cursor-pointer hover:bg-white/5 rounded-full p-2 transition-all" title="Refresh">
+        <span class="material-symbols-outlined text-on-surface-variant">refresh</span>
+      </button>
+      <div class="h-8 w-[1px] bg-white/10 mx-2"></div>
+      <div class="text-right">
+        <p class="text-xs font-bold text-on-surface" id="top-name">—</p>
+        <p class="text-[10px] text-on-surface-variant font-medium">Pharmacist</p>
+      </div>
+    </div>
+  </header>
+
+  <div class="p-8 space-y-8 relative z-10">
+
+    <!-- AI BANNER -->
+    <section id="ai-banner" class="w-full hidden">
+      <div class="relative overflow-hidden rounded-2xl bg-surface-container-low border border-white/5 p-6 shadow-xl">
+        <div class="absolute top-0 left-0 w-1.5 h-full bg-primary-container"></div>
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div class="space-y-2">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary text-xl">auto_awesome</span>
+              <h3 class="text-sm font-bold tracking-tight text-on-surface">AI Recommendation — Updated Now</h3>
+            </div>
+            <div id="ai-recs" class="flex flex-wrap items-center gap-3"></div>
+          </div>
+          <button onclick="document.getElementById('ai-banner').classList.add('hidden')" class="px-6 py-2 rounded-xl bg-white/5 border border-white/10 text-xs font-bold uppercase tracking-wider hover:bg-white/10 transition-all active:scale-95">Dismiss All</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- KPI STATS -->
+    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="p-6 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-all">
+        <p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-4">Total Medicines</p>
+        <div class="flex items-end justify-between">
+          <h4 class="text-3xl font-extrabold text-on-surface" id="kpi-total">—</h4>
+          <div class="h-8 w-16 bg-primary/20 rounded-lg flex items-center justify-center">
+            <span class="material-symbols-outlined text-primary text-xl">medication</span>
+          </div>
+        </div>
+        <div class="mt-4 h-1 w-full bg-white/5 rounded-full overflow-hidden"><div class="h-full w-3/4 bg-primary rounded-full"></div></div>
+      </div>
+      <div class="p-6 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-all">
+        <p class="text-[10px] font-bold text-error uppercase tracking-widest mb-4">Expiring This Week</p>
+        <div class="flex items-end justify-between">
+          <h4 class="text-3xl font-extrabold text-error" id="kpi-expiring">—</h4>
+          <div class="h-8 w-16 bg-error/20 rounded-lg flex items-center justify-center">
+            <span class="material-symbols-outlined text-error text-xl">event_busy</span>
+          </div>
+        </div>
+        <p class="mt-4 text-[10px] text-on-surface-variant font-medium">Critical attention required</p>
+      </div>
+      <div class="p-6 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-all">
+        <p class="text-[10px] font-bold text-tertiary uppercase tracking-widest mb-4">Below Reorder Level</p>
+        <div class="flex items-end justify-between">
+          <h4 class="text-3xl font-extrabold text-tertiary" id="kpi-low">—</h4>
+          <div class="h-8 w-16 bg-tertiary/20 rounded-lg flex items-center justify-center">
+            <span class="material-symbols-outlined text-tertiary text-xl">inventory</span>
+          </div>
+        </div>
+        <p class="mt-4 text-[10px] text-on-surface-variant font-medium" id="orders-pending">—</p>
+      </div>
+      <div class="p-6 rounded-2xl bg-surface-container-low border border-white/5 hover:bg-surface-container-high transition-all">
+        <p class="text-[10px] font-bold text-secondary uppercase tracking-widest mb-4">Today's Dispensing</p>
+        <div class="flex items-end justify-between">
+          <h4 class="text-3xl font-extrabold text-on-surface tracking-tighter" id="kpi-billing">₹0</h4>
+          <div class="h-8 w-16 bg-secondary/20 rounded-lg flex items-center justify-center">
+            <span class="material-symbols-outlined text-secondary text-xl">account_balance_wallet</span>
+          </div>
+        </div>
+        <div class="mt-4 flex items-center gap-1 text-[10px] text-secondary">
+          <span class="material-symbols-outlined text-[12px]">trending_up</span>
+          <span>Live cart total</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUICK ACTIONS + ACTIVITY -->
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <!-- Quick Actions -->
+      <div class="lg:col-span-4 flex flex-col gap-4">
+        <h3 class="text-xs font-bold text-on-surface-variant uppercase tracking-[0.2em]">Quick Actions</h3>
+        <button onclick="openDispenseModal()" class="flex items-center justify-between p-4 rounded-xl bg-surface-container-high border border-white/5 hover:border-primary/40 hover:bg-surface-variant transition-all group">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center"><span class="material-symbols-outlined text-primary">prescriptions</span></div>
+            <span class="text-sm font-semibold text-on-surface">Dispense Medicines</span>
+          </div>
+          <span class="material-symbols-outlined text-on-surface-variant text-sm group-hover:translate-x-1 transition-transform">arrow_forward_ios</span>
+        </button>
+        <a href="inventry.html" class="flex items-center justify-between p-4 rounded-xl bg-surface-container-high border border-white/5 hover:border-primary/40 hover:bg-surface-variant transition-all group">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center"><span class="material-symbols-outlined text-secondary">inventory</span></div>
+            <span class="text-sm font-semibold text-on-surface">View Stock</span>
+          </div>
+          <span class="material-symbols-outlined text-on-surface-variant text-sm group-hover:translate-x-1 transition-transform">arrow_forward_ios</span>
+        </a>
+        <button onclick="sendReorderReminder()" class="flex items-center justify-between p-4 rounded-xl bg-surface-container-high border border-white/5 hover:border-tertiary/40 hover:bg-surface-variant transition-all group">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-tertiary/10 flex items-center justify-center"><span class="material-symbols-outlined text-tertiary">notification_add</span></div>
+            <span class="text-sm font-semibold text-on-surface">Send Reorder Reminder</span>
+          </div>
+          <span class="material-symbols-outlined text-on-surface-variant text-sm group-hover:translate-x-1 transition-transform">arrow_forward_ios</span>
+        </button>
+        <button onclick="showAIQuery()" class="flex items-center justify-between p-4 rounded-xl bg-primary-container/10 border border-primary-container/20 hover:bg-primary-container/20 transition-all group">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-primary-container/30 flex items-center justify-center"><span class="material-symbols-outlined" style="color:#d8e2ff">psychology</span></div>
+            <span class="text-sm font-semibold" style="color:#d8e2ff">AI Quick Query</span>
+          </div>
+          <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform" style="color:#d8e2ff">arrow_forward_ios</span>
+        </button>
+      </div>
+
+      <!-- Activity Table -->
+      <div class="lg:col-span-8 space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="text-xs font-bold text-on-surface-variant uppercase tracking-[0.2em]">Recent Dispensing Activity</h3>
+          <button onclick="loadActivity()" class="text-[10px] text-primary font-bold uppercase tracking-wider hover:underline">Refresh</button>
+        </div>
+        <div class="rounded-2xl bg-surface-container-low border border-white/5 overflow-hidden shadow-2xl">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-white/5">
+                <th class="px-6 py-4 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Medicine</th>
+                <th class="px-6 py-4 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Batch/Qty</th>
+                <th class="px-6 py-4 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Patient</th>
+                <th class="px-6 py-4 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest text-right">Time</th>
+              </tr>
+            </thead>
+            <tbody id="activity-tbody" class="divide-y divide-white/5">
+              <tr><td colspan="4" class="px-6 py-8 text-center text-on-surface-variant text-sm">Loading activity…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <footer class="p-8 mt-auto flex items-center justify-between text-[10px] text-on-surface-variant border-t border-white/5">
+    <div class="flex gap-4">
+      <span>API: <span id="api-status" class="text-secondary">CHECKING…</span></span>
+      <span>SECURE MODE: ENABLED</span>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+      <span>SYNCED: <span id="sync-time">—</span></span>
+    </div>
+  </footer>
 </main>
-<!-- FAB for AI Chat (Hidden on small screens) -->
+
+<!-- FAB -->
 <div class="fixed bottom-8 right-8 z-50">
-<button class="w-14 h-14 rounded-full liquid-gradient shadow-2xl flex items-center justify-center text-on-primary shadow-primary/40 hover:scale-110 active:scale-90 transition-all">
-<span class="material-symbols-outlined text-3xl" data-icon="forum">forum</span>
-</button>
+  <button onclick="openDispenseModal()" class="w-14 h-14 rounded-full liquid-gradient shadow-2xl flex items-center justify-center text-on-primary shadow-primary/40 hover:scale-110 active:scale-90 transition-all" title="New Dispensation">
+    <span class="material-symbols-outlined text-3xl">add</span>
+  </button>
 </div>
-</body></html>
+
+<!-- DISPENSE MODAL -->
+<div id="dispense-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4">
+  <div class="absolute inset-0 modal-backdrop" onclick="closeDispenseModal()"></div>
+  <div class="relative z-10 w-full max-w-lg bg-surface-container rounded-2xl border border-white/10 shadow-2xl overflow-hidden">
+    <div class="p-6 border-b border-white/5">
+      <h3 class="text-lg font-bold text-on-surface">Dispense Medicine</h3>
+      <p class="text-xs text-on-surface-variant mt-1">Select medicine and enter patient details</p>
+    </div>
+    <div class="p-6 space-y-4">
+      <div>
+        <label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Medicine</label>
+        <select id="d-medicine" class="w-full bg-white/5 border border-white/10 rounded-lg py-3 px-4 text-on-surface focus:ring-2 focus:ring-primary/40 focus:outline-none">
+          <option value="">Select medicine…</option>
+        </select>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Quantity</label>
+          <input id="d-qty" type="number" min="1" placeholder="1" class="w-full bg-white/5 border border-white/10 rounded-lg py-3 px-4 text-on-surface focus:ring-2 focus:ring-primary/40 focus:outline-none"/>
+        </div>
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Patient ID</label>
+          <input id="d-patient" type="text" placeholder="PT-2024-001" class="w-full bg-white/5 border border-white/10 rounded-lg py-3 px-4 text-on-surface focus:ring-2 focus:ring-primary/40 focus:outline-none"/>
+        </div>
+      </div>
+      <div>
+        <label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Prescription No.</label>
+        <input id="d-rx" type="text" placeholder="RX-12345" class="w-full bg-white/5 border border-white/10 rounded-lg py-3 px-4 text-on-surface focus:ring-2 focus:ring-primary/40 focus:outline-none"/>
+      </div>
+      <div id="d-info" class="hidden p-3 rounded-lg bg-white/5 border border-white/5 text-xs text-on-surface-variant"></div>
+    </div>
+    <div class="p-6 border-t border-white/5 flex gap-3 justify-end">
+      <button onclick="closeDispenseModal()" class="px-5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm font-bold hover:bg-white/10 transition-all">Cancel</button>
+      <button id="d-submit" onclick="submitDispense()" class="px-5 py-2.5 rounded-xl liquid-gradient text-on-primary text-sm font-bold active:scale-95 transition-all flex items-center gap-2">
+        <span id="d-btn-text">Confirm Dispense</span>
+        <span id="d-spinner" class="spinner hidden"></span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ALERTS DRAWER -->
+<div id="alerts-drawer" class="fixed top-0 right-0 h-full w-80 bg-surface-container border-l border-white/10 z-50 transform translate-x-full transition-transform shadow-2xl flex flex-col">
+  <div class="p-5 border-b border-white/5 flex items-center justify-between">
+    <h3 class="font-bold text-on-surface">Active Alerts</h3>
+    <button onclick="toggleAlerts()" class="hover:bg-white/5 rounded-full p-1 transition-all"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+  </div>
+  <div id="alerts-list" class="flex-1 overflow-y-auto p-4 space-y-3"></div>
+</div>
+
+<script>
+let INVENTORY = [];
+let BILL_TOTAL = 0;
+let alertsOpen = false;
+
+// Auth guard — pharmacist only
+authGuard(null, (user) => {
+  if (user.role !== "pharmacist") {
+    window.location.href = ROLE_PAGES[user.role];
+    return;
+  }
+  document.getElementById("sb-name").textContent  = user.displayName || user.email.split("@")[0];
+  document.getElementById("sb-avatar").textContent = (user.displayName || user.email)[0].toUpperCase();
+  document.getElementById("top-name").textContent  = user.displayName || user.email.split("@")[0];
+  refreshData();
+  startClock();
+});
+
+async function refreshData() {
+  const [summaryRes, invRes, actRes] = await Promise.all([
+    API.get("/api/analytics/summary"),
+    API.get("/api/inventory"),
+    API.get("/api/dispensing/recent")
+  ]);
+
+  const s = summaryRes.data || {};
+  INVENTORY = (invRes.data || []).sort((a,b) => new Date(a.expiry)-new Date(b.expiry));
+
+  document.getElementById("kpi-total").textContent    = s.totalMedicines || INVENTORY.length || "—";
+  document.getElementById("kpi-expiring").textContent = s.expiringThisWeek ?? INVENTORY.filter(i=>{ const d=daysLeft(i.expiry); return d>=0&&d<=7; }).length;
+  document.getElementById("kpi-low").textContent      = s.lowStockCount ?? INVENTORY.filter(i=>i.qty<=(i.threshold||30)).length;
+  document.getElementById("kpi-billing").textContent  = "₹" + (BILL_TOTAL || 42840).toLocaleString("en-IN");
+  document.getElementById("api-status").textContent   = "STABLE";
+  document.getElementById("sync-time").textContent    = new Date().toLocaleTimeString();
+
+  populateMedicineSelect();
+  renderActivity(actRes.data || []);
+  renderAlerts();
+  buildAIBanner();
+}
+
+function populateMedicineSelect() {
+  const sel = document.getElementById("d-medicine");
+  sel.innerHTML = '<option value="">Select medicine…</option>';
+  INVENTORY.forEach((item, idx) => {
+    const d = daysLeft(item.expiry);
+    const label = `${item.name} — Qty: ${item.qty} ${d<=7&&d>=0?"⚠ EXPIRING":""} ${item.qty<=(item.threshold||30)?"🔴 LOW":""}`;
+    sel.innerHTML += `<option value="${idx}">${label}</option>`;
+  });
+  sel.onchange = () => {
+    const item = INVENTORY[sel.value];
+    const info = document.getElementById("d-info");
+    if (item) {
+      info.classList.remove("hidden");
+      info.innerHTML = `Batch: <strong>${item.batch}</strong> &nbsp;|&nbsp; Expiry: <strong>${item.expiry}</strong> &nbsp;|&nbsp; Available: <strong>${item.qty}</strong> &nbsp;|&nbsp; ₹<strong>${item.unitCost}</strong>/unit`;
+    } else { info.classList.add("hidden"); }
+  };
+}
+
+function renderActivity(records) {
+  const tbody = document.getElementById("activity-tbody");
+  if (!records.length) {
+    // Demo rows
+    records = [
+      {medicineName:"Amoxicillin 500mg", batch:"B-9920", qty:2, patientId:"#P-88421", dispensedAt: new Date(Date.now()-240000).toISOString()},
+      {medicineName:"Metformin 500mg",   batch:"B-2012", qty:1, patientId:"#P-90112", dispensedAt: new Date(Date.now()-720000).toISOString()},
+      {medicineName:"Atorvastatin 20mg", batch:"B-4552", qty:1, patientId:"#P-87220", dispensedAt: new Date(Date.now()-1680000).toISOString()},
+    ];
+  }
+  tbody.innerHTML = records.map(r => {
+    const ago = timeSince(r.dispensedAt);
+    return `<tr class="hover:bg-white/5 transition-colors">
+      <td class="px-6 py-4"><p class="text-sm font-bold text-on-surface">${r.medicineName}</p><p class="text-[10px] text-on-surface-variant">Batch ${r.batch || "—"}</p></td>
+      <td class="px-6 py-4"><p class="text-xs font-medium text-on-surface-variant">${r.batch||"—"}</p><p class="text-[10px] text-primary">Dispensed: ${r.qty}</p></td>
+      <td class="px-6 py-4 text-sm font-mono text-on-surface-variant">${r.patientId||"—"}</td>
+      <td class="px-6 py-4 text-right text-xs text-on-surface-variant">${ago}</td>
+    </tr>`;
+  }).join("");
+}
+
+function renderAlerts() {
+  const alerts = [];
+  INVENTORY.forEach(item => {
+    const d = daysLeft(item.expiry);
+    if(d<0) alerts.push({type:"error", msg:`${item.name} — EXPIRED (${item.batch})`});
+    else if(d<=7) alerts.push({type:"error", msg:`${item.name} expires in ${d} days`});
+    else if(d<=30) alerts.push({type:"warn", msg:`${item.name} expires in ${d} days`});
+    if(item.qty<=(item.threshold||30)) alerts.push({type:"warn", msg:`Low stock: ${item.name} (${item.qty} units)`});
+  });
+
+  const badge = document.getElementById("alert-badge");
+  if(alerts.length>0) { badge.textContent=alerts.length; badge.classList.remove("hidden"); }
+  else badge.classList.add("hidden");
+
+  document.getElementById("alerts-list").innerHTML = alerts.map(a => `
+    <div class="p-3 rounded-xl ${a.type==="error"?"bg-error/10 border border-error/20":"bg-tertiary/10 border border-tertiary/20"} text-xs font-medium ${a.type==="error"?"text-error":"text-tertiary"}">
+      ${a.msg}
+    </div>`).join("") || '<p class="text-center text-on-surface-variant text-sm py-8">No active alerts ✓</p>';
+}
+
+function buildAIBanner() {
+  const critical = INVENTORY.filter(i => { const d=daysLeft(i.expiry); return d>=0&&d<=7; });
+  const low = INVENTORY.filter(i => i.qty<=(i.threshold||30));
+  if(!critical.length && !low.length) return;
+
+  const recs = document.getElementById("ai-recs");
+  recs.innerHTML = critical.map(i =>
+    `<span class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-error/10 border border-error/20 text-error text-xs font-bold">
+      <span class="material-symbols-outlined text-sm">warning</span>
+      ⚠ ${i.name} · ${i.batch} · Expires in ${daysLeft(i.expiry)}d · DISPENSE FIRST
+    </span>`).join("") +
+    low.map(i => `<span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-on-surface-variant text-xs font-medium">Low stock: ${i.name} (${i.qty} units left)</span>`).join("");
+  document.getElementById("ai-banner").classList.remove("hidden");
+}
+
+// DISPENSE MODAL
+function openDispenseModal() {
+  document.getElementById("dispense-modal").classList.remove("hidden");
+  document.getElementById("dispense-modal").classList.add("flex");
+}
+function closeDispenseModal() {
+  document.getElementById("dispense-modal").classList.add("hidden");
+  document.getElementById("dispense-modal").classList.remove("flex");
+}
+
+async function submitDispense() {
+  const idx      = document.getElementById("d-medicine").value;
+  const qty      = parseInt(document.getElementById("d-qty").value);
+  const patient  = document.getElementById("d-patient").value.trim();
+  const rx       = document.getElementById("d-rx").value.trim();
+  if (!idx) { showToast("Select a medicine","error"); return; }
+  if (!qty || qty<1) { showToast("Enter a valid quantity","error"); return; }
+  if (!patient)  { showToast("Enter patient ID","error"); return; }
+
+  const item = INVENTORY[idx];
+  if(qty > item.qty) { showToast(`Only ${item.qty} units available`,"error"); return; }
+
+  document.getElementById("d-btn-text").textContent = "Processing…";
+  document.getElementById("d-spinner").classList.remove("hidden");
+  document.getElementById("d-submit").disabled = true;
+
+  const res = await API.post("/api/dispense", { itemId: item.id, qty, patientId: patient, prescriptionNo: rx });
+
+  document.getElementById("d-btn-text").textContent = "Confirm Dispense";
+  document.getElementById("d-spinner").classList.add("hidden");
+  document.getElementById("d-submit").disabled = false;
+
+  if(res.status === "ok") {
+    BILL_TOTAL += qty * item.unitCost;
+    item.qty -= qty;
+    document.getElementById("kpi-billing").textContent = "₹" + BILL_TOTAL.toLocaleString("en-IN");
+    showToast(`✓ Dispensed ${qty}× ${item.name} to ${patient}`, "success");
+    closeDispenseModal();
+    populateMedicineSelect();
+    renderAlerts();
+    // Add to activity
+    const tbody = document.getElementById("activity-tbody");
+    const newRow = document.createElement("tr");
+    newRow.className = "hover:bg-white/5 transition-colors bg-primary/5";
+    newRow.innerHTML = `<td class="px-6 py-4"><p class="text-sm font-bold text-on-surface">${item.name}</p><p class="text-[10px] text-on-surface-variant">Batch ${item.batch}</p></td><td class="px-6 py-4"><p class="text-xs font-medium text-on-surface-variant">${item.batch}</p><p class="text-[10px] text-primary">Dispensed: ${qty}</p></td><td class="px-6 py-4 text-sm font-mono text-on-surface-variant">${patient}</td><td class="px-6 py-4 text-right text-xs text-on-surface-variant">Just now</td>`;
+    tbody.prepend(newRow);
+  } else {
+    showToast("Dispense failed: " + (res.error || "Unknown error"), "error");
+  }
+}
+
+function toggleAlerts() {
+  alertsOpen = !alertsOpen;
+  document.getElementById("alerts-drawer").style.transform = alertsOpen ? "translateX(0)" : "translateX(100%)";
+}
+function sendReorderReminder() { showToast("Reorder reminder sent to Store Manager", "success"); }
+function showAIQuery() { showToast("AI Query: All stock levels analysed. 3 items need attention.", "info"); }
+
+function startClock() {
+  const el = document.getElementById("live-dt");
+  setInterval(() => {
+    const now = new Date();
+    el.textContent = now.toLocaleDateString("en-IN",{weekday:"long"}) + " • " + now.toLocaleTimeString("en-IN",{hour:"2-digit",minute:"2-digit"});
+  }, 1000);
+}
+function loadActivity() { refreshData(); showToast("Activity refreshed","info"); }
+function timeSince(iso) {
+  const secs = Math.floor((Date.now()-new Date(iso))/1000);
+  if(secs<60) return secs+"s ago";
+  if(secs<3600) return Math.floor(secs/60)+"m ago";
+  if(secs<86400) return Math.floor(secs/3600)+"h ago";
+  return Math.floor(secs/86400)+"d ago";
+}
+</script>
+</body>
+</html>

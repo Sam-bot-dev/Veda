@@ -1,444 +1,555 @@
 <!DOCTYPE html>
-
-<html class="dark" lang="en"><head>
+<html class="dark" lang="en">
+<head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Veda Manager Dashboard</title>
+<title>Veda | Store Manager Dashboard</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
 <script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              "surface-container-low": "#161b2b",
-              "primary-fixed-dim": "#adc6ff",
-              "surface-bright": "#343949",
-              "surface-variant": "#2f3445",
-              "on-primary": "#002e6a",
-              "secondary": "#4edea3",
-              "primary-fixed": "#d8e2ff",
-              "on-surface": "#dee1f7",
-              "surface-dim": "#0e1322",
-              "on-background": "#dee1f7",
-              "outline": "#8c909f",
-              "on-primary-fixed": "#001a42",
-              "on-primary-container": "#00285d",
-              "inverse-on-surface": "#2b3040",
-              "background": "#0e1322",
-              "primary-container": "#4d8eff",
-              "on-secondary": "#003824",
-              "surface-container-lowest": "#090e1c",
-              "secondary-fixed-dim": "#4edea3",
-              "secondary-fixed": "#6ffbbe",
-              "tertiary-fixed": "#ffdad7",
-              "primary": "#adc6ff",
-              "on-secondary-fixed-variant": "#005236",
-              "tertiary": "#ffb3ad",
-              "on-tertiary-container": "#5c0008",
-              "surface": "#0e1322",
-              "inverse-primary": "#005ac2",
-              "tertiary-container": "#ff5451",
-              "on-surface-variant": "#c2c6d6",
-              "on-error": "#690005",
-              "on-error-container": "#ffdad6",
-              "on-tertiary-fixed": "#410004",
-              "on-tertiary-fixed-variant": "#930013",
-              "on-primary-fixed-variant": "#004395",
-              "surface-container-highest": "#2f3445",
-              "error-container": "#93000a",
-              "surface-container-high": "#25293a",
-              "surface-container": "#1a1f2f",
-              "error": "#ffb4ab",
-              "tertiary-fixed-dim": "#ffb3ad",
-              "on-secondary-fixed": "#002113",
-              "surface-tint": "#adc6ff",
-              "outline-variant": "#424754",
-              "on-tertiary": "#68000a",
-              "on-secondary-container": "#00311f",
-              "inverse-surface": "#dee1f7",
-              "secondary-container": "#00a572"
-            },
-            fontFamily: {
-              "headline": ["Inter"],
-              "body": ["Inter"],
-              "label": ["Inter"]
-            },
-            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
-          },
-        },
-      }
-    </script>
+  tailwind.config={darkMode:"class",theme:{extend:{colors:{
+    "surface-container-low":"#161b2b","primary-fixed-dim":"#adc6ff","surface-bright":"#343949",
+    "surface-variant":"#2f3445","on-primary":"#002e6a","secondary":"#4edea3","primary-fixed":"#d8e2ff",
+    "on-surface":"#dee1f7","surface-dim":"#0e1322","on-background":"#dee1f7","outline":"#8c909f",
+    "on-primary-fixed":"#001a42","on-primary-container":"#00285d","inverse-on-surface":"#2b3040",
+    "background":"#0e1322","primary-container":"#4d8eff","on-secondary":"#003824",
+    "surface-container-lowest":"#090e1c","secondary-fixed-dim":"#4edea3","secondary-fixed":"#6ffbbe",
+    "tertiary-fixed":"#ffdad7","primary":"#adc6ff","tertiary":"#ffb3ad","on-tertiary-container":"#5c0008",
+    "surface":"#0e1322","inverse-primary":"#005ac2","tertiary-container":"#ff5451",
+    "on-surface-variant":"#c2c6d6","on-error":"#690005","on-error-container":"#ffdad6",
+    "on-primary-fixed-variant":"#004395","surface-container-highest":"#2f3445","error-container":"#93000a",
+    "surface-container-high":"#25293a","surface-container":"#1a1f2f","error":"#ffb4ab",
+    "on-secondary-fixed":"#002113","surface-tint":"#adc6ff","outline-variant":"#424754",
+    "on-tertiary":"#68000a","on-secondary-container":"#00311f","inverse-surface":"#dee1f7",
+    "secondary-container":"#00a572"
+  },fontFamily:{"headline":["Inter"],"body":["Inter"],"label":["Inter"]},
+  borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"}}}}
+</script>
 <style>
-        body { font-family: 'Inter', sans-serif; }
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .liquid-gradient-primary {
-            background: linear-gradient(135deg, #adc6ff 0%, #4d8eff 100%);
-        }
-        .orb-blur {
-            position: fixed;
-            width: 500px;
-            height: 500px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(77, 142, 255, 0.08) 0%, rgba(0, 0, 0, 0) 70%);
-            filter: blur(80px);
-            z-index: -1;
-        }
-    </style>
+  body { font-family:'Inter',sans-serif; }
+  .glass-panel { background:rgba(255,255,255,0.06); backdrop-filter:blur(20px); border:1px solid rgba(255,255,255,0.05); }
+  .liquid-gradient-primary { background:linear-gradient(135deg,#adc6ff 0%,#4d8eff 100%); }
+  .material-symbols-outlined { font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24; }
+  .modal-backdrop { background:rgba(0,0,0,0.7); backdrop-filter:blur(8px); }
+  .spinner { width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:inline-block; }
+  @keyframes spin{to{transform:rotate(360deg);}}
+  ::-webkit-scrollbar{width:4px;} ::-webkit-scrollbar-thumb{background:#2f3445;border-radius:4px;}
+</style>
 </head>
 <body class="bg-surface-dim text-on-surface min-h-screen flex overflow-hidden">
-<div class="orb-blur top-[-10%] left-[-5%]"></div>
-<div class="orb-blur bottom-[-10%] right-[-5%]"></div>
-<!-- SideNavBar -->
+
+<!-- SIDEBAR -->
 <aside class="w-[220px] h-screen sticky left-0 top-0 border-r border-white/10 bg-slate-950/60 backdrop-blur-xl flex flex-col p-4 shadow-[20px_0_40px_rgba(0,0,0,0.4)] z-50">
-<div class="mb-8 px-2">
-<span class="text-2xl font-bold tracking-tighter bg-gradient-to-br from-blue-200 to-blue-500 bg-clip-text text-transparent">Veda</span>
-<div class="mt-4 flex items-center gap-3">
-<img class="w-8 h-8 rounded-full bg-surface-container-high border border-white/10" data-alt="Manager profile avatar photo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbEide7D0nM_wNQQDHJ-SrEFoz1wZ3nLA4QyPzySTvfNh_1DZHY12fu_AJbXsm52bkB7SV47p86DAQMm246B8t8oIUh0HPnrjaixNK-TcqVOpwv5L-jcNVA0BgLV0wsVnY_rKr1WR1wK62omBOpbahX841YzA70oL494elsnjDuSToLjYnPcgvRZfd0n2wWVQCx8-Oc-5sxIuh7za9Ut7rN5ws6AC4RwBDCgQ4KYxURja7YPGoYZKsvn2Yqf-1OUe1sj-GxLl6eIij"/>
-<div class="flex flex-col">
-<span class="text-xs font-bold text-on-surface uppercase tracking-widest">Pharmacist</span>
-<span class="text-[10px] text-secondary">Online</span>
-</div>
-</div>
-</div>
-<nav class="flex-1 space-y-1">
-<a class="flex items-center gap-3 px-4 py-3 text-blue-300 bg-white/10 rounded-lg transition-all" href="#">
-<span class="material-symbols-outlined text-xl">dashboard</span>
-<span class="text-sm font-medium">Dashboard</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 hover:bg-white/5 transition-colors" href="#">
-<span class="material-symbols-outlined text-xl">store</span>
-<span class="text-sm font-medium">My Stores</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 hover:bg-white/5 transition-colors" href="#">
-<span class="material-symbols-outlined text-xl">inventory_2</span>
-<span class="text-sm font-medium">Inventory</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 hover:bg-white/5 transition-colors" href="#">
-<span class="material-symbols-outlined text-xl">shopping_cart</span>
-<span class="text-sm font-medium">Orders</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 hover:bg-white/5 transition-colors" href="#">
-<span class="material-symbols-outlined text-xl">account_tree</span>
-<span class="text-sm font-medium">Supply Chain</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 hover:bg-white/5 transition-colors" href="#">
-<span class="material-symbols-outlined text-xl">bar_chart</span>
-<span class="text-sm font-medium">Analytics</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 hover:bg-white/5 transition-colors" href="#">
-<span class="material-symbols-outlined text-xl">delete_sweep</span>
-<span class="text-sm font-medium">Waste</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 hover:bg-white/5 transition-colors" href="#">
-<span class="material-symbols-outlined text-xl">settings</span>
-<span class="text-sm font-medium">Settings</span>
-</a>
-</nav>
-<button class="mt-auto w-full liquid-gradient-primary text-on-primary-container font-bold py-3 rounded-lg text-sm active:scale-[0.98] transition-all shadow-lg shadow-primary/20">
-            New Dispensation
-        </button>
+  <div class="mb-8 px-2">
+    <span class="text-2xl font-bold tracking-tighter bg-gradient-to-br from-blue-200 to-blue-500 bg-clip-text text-transparent">Veda</span>
+    <div class="mt-4 flex items-center gap-3">
+      <div class="w-8 h-8 rounded-full bg-primary/20 border border-white/10 flex items-center justify-center text-primary font-bold text-sm" id="sb-avatar">?</div>
+      <div class="flex flex-col">
+        <span class="text-xs font-bold text-on-surface uppercase tracking-widest" id="sb-name">Manager</span>
+        <span class="text-[10px] text-secondary">Online</span>
+      </div>
+    </div>
+  </div>
+  <nav class="flex-1 space-y-1">
+    <a href="manager.html" class="flex items-center gap-3 px-4 py-3 text-blue-300 bg-white/10 rounded-lg transition-all">
+      <span class="material-symbols-outlined text-xl">dashboard</span><span class="text-sm font-medium">Dashboard</span>
+    </a>
+    <a href="inventry.html" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 hover:bg-white/5 transition-colors rounded-lg">
+      <span class="material-symbols-outlined text-xl">inventory_2</span><span class="text-sm font-medium">Inventory</span>
+    </a>
+    <a href="#" onclick="showSection('orders')" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 hover:bg-white/5 transition-colors rounded-lg">
+      <span class="material-symbols-outlined text-xl">shopping_cart</span><span class="text-sm font-medium">Orders</span>
+    </a>
+    <a href="#" onclick="showSection('analytics')" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 hover:bg-white/5 transition-colors rounded-lg">
+      <span class="material-symbols-outlined text-xl">bar_chart</span><span class="text-sm font-medium">Analytics</span>
+    </a>
+    <a href="#" onclick="showSection('supply')" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 hover:bg-white/5 transition-colors rounded-lg">
+      <span class="material-symbols-outlined text-xl">account_tree</span><span class="text-sm font-medium">Supply Chain</span>
+    </a>
+    <a href="setting.html" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-slate-100 hover:bg-white/5 transition-colors rounded-lg">
+      <span class="material-symbols-outlined text-xl">settings</span><span class="text-sm font-medium">Settings</span>
+    </a>
+    <div class="pt-4 border-t border-white/5 mt-2">
+      <button onclick="signOut()" class="flex items-center gap-3 px-4 py-3 text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-colors rounded-lg w-full">
+        <span class="material-symbols-outlined text-xl">logout</span><span class="text-sm font-medium">Sign Out</span>
+      </button>
+    </div>
+  </nav>
+  <button onclick="openReceiveModal()" class="mt-auto w-full liquid-gradient-primary text-on-primary-container font-bold py-3 rounded-lg text-sm active:scale-[0.98] transition-all shadow-lg shadow-primary/20">
+    + Receive Stock
+  </button>
 </aside>
-<!-- Main Content Area -->
-<main class="flex-1 flex flex-col h-screen overflow-y-auto bg-transparent">
-<!-- TopNavBar -->
-<header class="w-full h-16 sticky top-0 z-40 border-b border-white/5 bg-slate-950/40 backdrop-blur-md flex justify-between items-center px-6">
-<div class="flex items-center gap-6 flex-1">
-<!-- Store Switcher -->
-<div class="relative group">
-<button class="flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-1.5 rounded-lg text-sm font-medium hover:bg-white/10 transition-colors">
-<span class="material-symbols-outlined text-secondary text-lg">local_pharmacy</span>
-<span>Main Pharmacy - Block A</span>
-<span class="material-symbols-outlined text-sm opacity-50">expand_more</span>
-</button>
-</div>
-<div class="relative w-96 max-w-md">
-<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">search</span>
-<input class="w-full bg-white/5 border border-white/5 rounded-full py-1.5 pl-10 pr-4 text-sm focus:outline-none focus:border-primary/40 transition-all" placeholder="Search medicine, orders or alerts..." type="text"/>
-</div>
-</div>
-<div class="flex items-center gap-4">
-<button class="hover:bg-white/5 rounded-full p-2 transition-all active:scale-95 relative">
-<span class="material-symbols-outlined text-on-surface">notifications</span>
-<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border border-surface-dim"></span>
-</button>
-<button class="hover:bg-white/5 rounded-full p-2 transition-all active:scale-95">
-<span class="material-symbols-outlined text-on-surface">history</span>
-</button>
-<div class="h-8 w-[1px] bg-white/10 mx-2"></div>
-<img class="w-8 h-8 rounded-full border border-primary/20" data-alt="Manager profile thumbnail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAe-A39dif90EWU3tgb3HC_crcNgtWXL-cOJpo7wFP-VIh-zzYWcekCRtN0ERApdCOwMlqlpsaGEPeVTOVioVm5h89kJVzrHRB38gAB9njcRA9nteviWElW5NEtz5u29104vE4ePo8aTLdHuOQTVB8r19TVYqbArJ5WINj0DqxDJHJgAWxXRY-1BxfA9Z6A72x91mRQZc_x4omePU82kJHhYZgotj4OiIYcK62wWTG861jZ9KSWzZcA9UR_J-zVLXLefvjqOcSVplls"/>
-</div>
-</header>
-<section class="p-8 space-y-8 max-w-[1600px] mx-auto w-full">
-<!-- DASHBOARD STATS (4 Cards) -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-<!-- Total Inventory -->
-<div class="glass-panel p-6 rounded-xl relative overflow-hidden">
-<div class="absolute top-0 left-0 w-1 h-full bg-primary/40"></div>
-<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1">Total Inventory Value</p>
-<h3 class="text-3xl font-light text-on-surface tracking-tight tabular-nums">₹2,14,58,000</h3>
-<div class="mt-4 flex items-center gap-1 text-secondary text-xs">
-<span class="material-symbols-outlined text-sm">trending_up</span>
-<span>+2.4% vs last month</span>
-</div>
-</div>
-<!-- Critical Alerts -->
-<div class="glass-panel p-6 rounded-xl relative overflow-hidden bg-error-container/10 border-error/20">
-<div class="absolute top-0 left-0 w-1 h-full bg-error"></div>
-<p class="text-[10px] font-bold text-error uppercase tracking-widest mb-1">Critical Alerts</p>
-<h3 class="text-3xl font-bold text-on-surface tracking-tight">05</h3>
-<p class="mt-4 text-xs text-error/80">3 Expiring batches, 2 Low stock</p>
-</div>
-<!-- Pending Orders -->
-<div class="glass-panel p-6 rounded-xl relative overflow-hidden">
-<div class="absolute top-0 left-0 w-1 h-full bg-secondary/40"></div>
-<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1">Pending Orders</p>
-<h3 class="text-3xl font-light text-on-surface tracking-tight">12</h3>
-<div class="mt-4 flex items-center gap-2">
-<div class="flex -space-x-2">
-<div class="w-5 h-5 rounded-full border border-surface-container-low bg-primary"></div>
-<div class="w-5 h-5 rounded-full border border-surface-container-low bg-secondary"></div>
-<div class="w-5 h-5 rounded-full border border-surface-container-low bg-tertiary"></div>
-</div>
-<span class="text-xs text-on-surface-variant">Awaiting approval</span>
-</div>
-</div>
-<!-- Waste Month -->
-<div class="glass-panel p-6 rounded-xl relative overflow-hidden">
-<div class="absolute top-0 left-0 w-1 h-full bg-tertiary/40"></div>
-<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1">Waste This Month</p>
-<h3 class="text-3xl font-light text-on-surface tracking-tight tabular-nums text-tertiary">₹12,450</h3>
-<div class="mt-4 w-full bg-surface-container-highest/50 h-1.5 rounded-full overflow-hidden">
-<div class="h-full bg-tertiary w-[12%] shadow-[0_0_8px_rgba(255,179,173,0.5)]"></div>
-</div>
-</div>
-</div>
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-<!-- AI ORDER INTELLIGENCE PANEL (Main Content) -->
-<div class="lg:col-span-8 space-y-6">
-<div class="glass-panel rounded-xl p-6 relative">
-<div class="flex items-center justify-between mb-6">
-<div>
-<h2 class="text-xl font-bold tracking-tight">AI Order Book</h2>
-<p class="text-sm text-on-surface-variant">Recommended restocking based on seasonal patterns and usage.</p>
-</div>
-<div class="flex items-center gap-2 bg-secondary/10 border border-secondary/20 px-3 py-1.5 rounded-lg text-secondary">
-<span class="material-symbols-outlined text-lg">auto_awesome</span>
-<span class="text-xs font-bold uppercase tracking-wider">AI Insight Active</span>
-</div>
-</div>
-<div class="bg-surface-container-lowest/40 border-l-4 border-tertiary p-4 rounded-lg mb-6">
-<div class="flex gap-3 items-start">
-<span class="material-symbols-outlined text-tertiary">warning</span>
-<div>
-<p class="text-sm font-medium text-tertiary">⚠ Monsoon season approaching</p>
-<p class="text-xs text-on-surface-variant">Increase ORS and Paracetamol orders by 40% based on historical viral trends.</p>
-</div>
-</div>
-</div>
-<div class="overflow-x-auto">
-<table class="w-full text-left border-collapse">
-<thead>
-<tr class="text-[10px] text-on-surface-variant uppercase tracking-widest border-b border-white/5">
-<th class="pb-3 px-2">Medicine</th>
-<th class="pb-3 px-2">Qty / Usage</th>
-<th class="pb-3 px-2">Deadline</th>
-<th class="pb-3 px-2">Recommended</th>
-<th class="pb-3 px-2 text-right">Est. Cost (₹)</th>
-<th class="pb-3 px-2"></th>
-</tr>
-</thead>
-<tbody class="text-sm divide-y divide-white/5">
-<tr class="hover:bg-white/5 transition-colors group">
-<td class="py-4 px-2">
-<div class="font-medium">Paracetamol IP 500mg</div>
-<div class="text-[10px] text-on-surface-variant">GSK Pharmaceuticals</div>
-</td>
-<td class="py-4 px-2">
-<div class="text-on-surface">1,200 <span class="text-[10px] opacity-50">UNITS</span></div>
-<div class="text-[10px] text-secondary">85 units/day avg</div>
-</td>
-<td class="py-4 px-2">
-<span class="text-error font-bold text-xs uppercase bg-error/10 px-2 py-0.5 rounded">Urgent</span>
-</td>
-<td class="py-4 px-2 font-bold text-primary">5,000</td>
-<td class="py-4 px-2 text-right tabular-nums font-medium">12,500.00</td>
-<td class="py-4 px-2 text-right">
-<button class="bg-primary/10 hover:bg-primary/20 text-primary text-xs font-bold py-1.5 px-3 rounded-lg transition-all active:scale-95">Order</button>
-</td>
-</tr>
-<tr class="hover:bg-white/5 transition-colors">
-<td class="py-4 px-2">
-<div class="font-medium">Amoxicillin 250mg</div>
-<div class="text-[10px] text-on-surface-variant">Abbott India</div>
-</td>
-<td class="py-4 px-2">
-<div class="text-on-surface">450 <span class="text-[10px] opacity-50">UNITS</span></div>
-<div class="text-[10px] text-on-surface-variant">30 units/day avg</div>
-</td>
-<td class="py-4 px-2">
-<span class="text-on-surface-variant text-xs">03 Days</span>
-</td>
-<td class="py-4 px-2 font-bold text-primary">1,000</td>
-<td class="py-4 px-2 text-right tabular-nums font-medium">8,200.00</td>
-<td class="py-4 px-2 text-right">
-<button class="bg-primary/10 hover:bg-primary/20 text-primary text-xs font-bold py-1.5 px-3 rounded-lg transition-all active:scale-95">Order</button>
-</td>
-</tr>
-<tr class="hover:bg-white/5 transition-colors">
-<td class="py-4 px-2">
-<div class="font-medium">ORS Sachet Lemon</div>
-<div class="text-[10px] text-on-surface-variant">Cipla Health</div>
-</td>
-<td class="py-4 px-2">
-<div class="text-on-surface">2,500 <span class="text-[10px] opacity-50">UNITS</span></div>
-<div class="text-[10px] text-secondary">150 units/day avg</div>
-</td>
-<td class="py-4 px-2">
-<span class="text-on-surface-variant text-xs">07 Days</span>
-</td>
-<td class="py-4 px-2 font-bold text-primary">8,000</td>
-<td class="py-4 px-2 text-right tabular-nums font-medium">4,000.00</td>
-<td class="py-4 px-2 text-right">
-<button class="bg-primary/10 hover:bg-primary/20 text-primary text-xs font-bold py-1.5 px-3 rounded-lg transition-all active:scale-95">Order</button>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<!-- EXPIRY TIMELINE -->
-<div class="glass-panel rounded-xl p-6">
-<div class="flex items-center justify-between mb-8">
-<h2 class="text-lg font-bold tracking-tight">Expiry Watchlist (90 Days)</h2>
-<button class="text-xs text-primary font-bold uppercase tracking-widest hover:underline">Full Audit</button>
-</div>
-<div class="relative pt-6 pb-2">
-<div class="absolute top-[42px] left-0 w-full h-[1px] bg-white/10"></div>
-<div class="flex justify-between items-center relative">
-<!-- Dots representing expiries -->
-<div class="flex flex-col items-center group cursor-pointer">
-<div class="w-3 h-3 rounded-full bg-error ring-4 ring-error/20 mb-4"></div>
-<span class="text-[10px] text-on-surface-variant">Today</span>
-</div>
-<div class="flex flex-col items-center opacity-30">
-<div class="w-2 h-2 rounded-full bg-white/40 mb-4"></div>
-<span class="text-[10px]">15d</span>
-</div>
-<div class="flex flex-col items-center group cursor-pointer">
-<div class="w-3 h-3 rounded-full bg-tertiary mb-4"></div>
-<span class="text-[10px] text-on-surface-variant">30d</span>
-<!-- Tooltip simulation -->
-<div class="absolute -top-12 opacity-0 group-hover:opacity-100 transition-opacity bg-surface-container-high border border-white/10 p-2 rounded text-[10px] whitespace-nowrap z-10">
-                                        Insulin Glargine (120 units)
-                                    </div>
-</div>
-<div class="flex flex-col items-center opacity-30">
-<div class="w-2 h-2 rounded-full bg-white/40 mb-4"></div>
-<span class="text-[10px]">45d</span>
-</div>
-<div class="flex flex-col items-center group cursor-pointer">
-<div class="w-3 h-3 rounded-full bg-secondary mb-4"></div>
-<span class="text-[10px] text-on-surface-variant">60d</span>
-</div>
-<div class="flex flex-col items-center opacity-30">
-<div class="w-2 h-2 rounded-full bg-white/40 mb-4"></div>
-<span class="text-[10px]">75d</span>
-</div>
-<div class="flex flex-col items-center group cursor-pointer">
-<div class="w-3 h-3 rounded-full bg-primary mb-4"></div>
-<span class="text-[10px] text-on-surface-variant">90d</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- SIDEBAR PANELS -->
-<div class="lg:col-span-4 space-y-6">
-<!-- ₹ WASTE COMPARISON (Widget) -->
-<div class="glass-panel rounded-xl p-6">
-<div class="flex items-center justify-between mb-6">
-<h2 class="text-sm font-bold uppercase tracking-widest text-on-surface-variant">Waste Comparison</h2>
-<span class="material-symbols-outlined text-tertiary text-lg">assessment</span>
-</div>
-<div class="flex items-end justify-between h-32 gap-3 px-2">
-<div class="flex-1 flex flex-col items-center gap-2">
-<div class="w-full bg-white/10 rounded-t-lg h-full transition-all hover:bg-white/20"></div>
-<span class="text-[9px] text-on-surface-variant">Last Month</span>
-</div>
-<div class="flex-1 flex flex-col items-center gap-2">
-<div class="w-full bg-white/10 rounded-t-lg h-[65%] transition-all hover:bg-white/20"></div>
-<span class="text-[9px] text-on-surface-variant">Last Week</span>
-</div>
-<div class="flex-1 flex flex-col items-center gap-2">
-<div class="w-full bg-tertiary/60 rounded-t-lg h-[25%] transition-all hover:bg-tertiary shadow-[0_0_15px_rgba(255,179,173,0.3)]"></div>
-<span class="text-[9px] font-bold text-tertiary">This Week</span>
-</div>
-</div>
-<div class="mt-6 pt-4 border-t border-white/5 flex items-center justify-between">
-<span class="text-xs text-on-surface-variant">Optimization Score</span>
-<span class="text-xs font-bold text-secondary">92%</span>
-</div>
-</div>
-<!-- REORDER REMINDERS INBOX -->
-<div class="glass-panel rounded-xl flex flex-col max-h-[500px]">
-<div class="p-6 border-b border-white/5 flex items-center justify-between">
-<h2 class="text-sm font-bold uppercase tracking-widest text-on-surface-variant">Reorder Inbox</h2>
-<span class="bg-primary/20 text-primary text-[10px] px-2 py-0.5 rounded-full">04 NEW</span>
-</div>
-<div class="flex-1 overflow-y-auto p-4 space-y-3">
-<!-- Notification Item -->
-<div class="p-3 bg-white/5 rounded-lg border border-white/5 hover:border-primary/30 transition-all group">
-<div class="flex justify-between items-start mb-2">
-<div class="flex items-center gap-2">
-<img class="w-5 h-5 rounded-full border border-white/10" data-alt="Staff profile John Doe" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvJVu_lxRhDu4DJZ4EwffoJkhrD6PjexeIjigu4mRXlt3nwhm1Nx2yMCWDzDHFeZUy--dldgoIpaEDFdsYvYy1gRm79xB1kHOP32AHbotGA4Z_zn4Eo_XtDtWfvxtcWkQ3qq8HWVX1ySKZuJo7JbhxTZP7k0lkrDP1_Aago2oX9JwYZer1NTmwzh_OgAP6OeGfnWO2zi7jkrUl0Sbgkiqz1T9xJOGA-iBhjQnkjls-xnuz_KtpIe66Q-hpl1p0fWJr_V9choOaeqaP"/>
-<span class="text-xs font-bold">Dr. John Doe</span>
-</div>
-<span class="text-[9px] text-on-surface-variant">12m ago</span>
-</div>
-<p class="text-xs text-on-surface/80 leading-relaxed italic">"Running low on Metformin 500mg in Cabin B. Need restock by evening shift."</p>
-<div class="mt-3 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-<button class="text-[10px] font-bold text-secondary bg-secondary/10 px-3 py-1 rounded">APPROVE</button>
-<button class="text-[10px] font-bold text-on-surface-variant hover:text-on-surface transition-colors">DISMISS</button>
-</div>
-</div>
-<div class="p-3 bg-white/5 rounded-lg border border-white/5 hover:border-primary/30 transition-all group">
-<div class="flex justify-between items-start mb-2">
-<div class="flex items-center gap-2">
-<img class="w-5 h-5 rounded-full border border-white/10" data-alt="Staff profile Ananya R" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0shfvdixw2dYMg-FV33BJtKH_NX7YsoFHD5_VS6lFdvgCrL-sH-isf2QkgAMvKNB734Ayzw-XZ5HSQU-5s68Uz2gglGPdm91ynZmWq8Y-hVzRoutJe1v1R3UsL0NY7uF-MFAxRYHqpMvfBwXXNSlzfLKXUCUXB-jWVu9-H0q7YKwhU3tz-oRP9P5CJT4FvxI8WsSE0PclimAGZJ6j6fghjdOxE_ssXgomvudxgVJChnrihYWtXKi3iP5nBun0zDbJPEfrBvwywk-a"/>
-<span class="text-xs font-bold">Ananya R.</span>
-</div>
-<span class="text-[9px] text-on-surface-variant">1h ago</span>
-</div>
-<p class="text-xs text-on-surface/80 leading-relaxed">"Ondansetron injection inventory mismatch. Physical count: 12. System shows: 18."</p>
-</div>
-<div class="p-3 bg-white/5 rounded-lg border border-white/5 hover:border-primary/30 transition-all group">
-<div class="flex justify-between items-start mb-2">
-<div class="flex items-center gap-2">
-<img class="w-5 h-5 rounded-full border border-white/10" data-alt="Staff profile Suresh K" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhqmN7UwAAXg1UocvL2KEhJBxDzosVq0w6hC9reZMb2K7px7r7tjH8OiEUvcVemytdBLw4CiUhf4isqW50muaipWHyIsPhh-WkrGFhM5eniJFQiemornKYv-ycF-HANrLHFGQBM-9flEf8gqfCnl1aJPuhL_b-mXoZuF4aOpHPz-ix6m2lHHn67MzCNXRIam0kBRErArWLRXjU5nDDim5u2dM0uAGPnZp2erH6IQNea8FTBd-Vj15hvCm_G0Vns2rUIrRHRhISrE8c"/>
-<span class="text-xs font-bold">Suresh K.</span>
-</div>
-<span class="text-[9px] text-on-surface-variant">3h ago</span>
-</div>
-<p class="text-xs text-on-surface/80 leading-relaxed italic">"Urgent request for pediatric paracetamol drops. Surge in patients today."</p>
-</div>
-</div>
-<button class="p-4 text-center text-[10px] font-bold text-primary tracking-widest border-t border-white/5 uppercase hover:bg-white/5 transition-colors">
-                            View All Requests
-                        </button>
-</div>
-</div>
-</div>
-</section>
+
+<!-- MAIN -->
+<main class="flex-1 h-screen overflow-y-auto bg-surface-dim">
+
+  <!-- TOPBAR -->
+  <header class="w-full h-16 sticky top-0 z-40 border-b border-white/5 bg-slate-950/40 backdrop-blur-md flex justify-between items-center px-6">
+    <div class="flex items-center flex-1 max-w-xl">
+      <div class="relative w-full">
+        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-lg">search</span>
+        <input id="search-input" class="w-full bg-white/5 border-none rounded-full pl-10 pr-4 py-1.5 text-sm focus:ring-1 focus:ring-primary/40 placeholder:text-slate-600" placeholder="Search inventory…" type="text" oninput="filterTable()"/>
+      </div>
+    </div>
+    <div class="flex items-center gap-4">
+      <button onclick="toggleAlerts()" class="hover:bg-white/5 rounded-full p-2 transition-all relative">
+        <span class="material-symbols-outlined text-slate-400">notifications</span>
+        <span id="alert-badge" class="absolute top-1 right-1 w-3.5 h-3.5 bg-error text-[9px] text-white flex items-center justify-center rounded-full font-bold hidden">0</span>
+      </button>
+      <button onclick="refreshData()" class="hover:bg-white/5 rounded-full p-2 transition-all" title="Refresh">
+        <span class="material-symbols-outlined text-slate-400">refresh</span>
+      </button>
+      <div class="h-8 w-[1px] bg-white/10 mx-2"></div>
+      <button onclick="openReceiveModal()" class="liquid-gradient-primary px-4 py-1.5 rounded-lg text-on-primary text-xs font-bold shadow-lg shadow-primary/20 flex items-center gap-2 active:scale-95 transition-transform">
+        <span class="material-symbols-outlined text-sm" style="font-variation-settings:'FILL' 1">add</span>
+        Receive Stock
+      </button>
+    </div>
+  </header>
+
+  <div class="p-8 space-y-8 max-w-[1600px] mx-auto w-full">
+
+    <!-- KPIs -->
+    <section class="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div class="glass-panel p-5 rounded-xl flex flex-col justify-between min-h-[130px]">
+        <div class="flex justify-between items-start">
+          <span class="material-symbols-outlined text-primary p-2 bg-primary/10 rounded-lg">account_balance_wallet</span>
+          <span class="text-[10px] font-bold text-primary tracking-wider">CAPITAL</span>
+        </div>
+        <div><div class="text-2xl font-bold tracking-tight mb-1" id="kpi-value">₹—</div><div class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Total Inventory Value</div></div>
+      </div>
+      <div class="glass-panel p-5 rounded-xl flex flex-col justify-between min-h-[130px]">
+        <div class="flex justify-between items-start">
+          <span class="material-symbols-outlined text-error p-2 bg-error/10 rounded-lg">timer</span>
+          <span class="text-[10px] font-bold text-error tracking-wider">RISK</span>
+        </div>
+        <div><div class="text-2xl font-bold tracking-tight mb-1 text-error" id="kpi-risk">₹—</div><div class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Expiry Risk Value</div></div>
+      </div>
+      <div class="glass-panel p-5 rounded-xl flex flex-col justify-between min-h-[130px]">
+        <div class="flex justify-between items-start">
+          <span class="material-symbols-outlined text-tertiary p-2 bg-tertiary/10 rounded-lg">shopping_cart</span>
+          <span class="text-[10px] font-bold text-tertiary tracking-wider">ORDERS</span>
+        </div>
+        <div><div class="text-2xl font-bold tracking-tight mb-1" id="kpi-orders">—</div><div class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Pending Orders</div></div>
+      </div>
+      <div class="glass-panel p-5 rounded-xl flex flex-col justify-between min-h-[130px]">
+        <div class="flex justify-between items-start">
+          <span class="material-symbols-outlined text-secondary p-2 bg-secondary/10 rounded-lg">delete_sweep</span>
+          <span class="text-[10px] font-bold text-secondary tracking-wider">WASTE</span>
+        </div>
+        <div><div class="text-2xl font-bold tracking-tight mb-1" id="kpi-waste">₹18,240</div><div class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Waste Value (MTD)</div></div>
+      </div>
+    </section>
+
+    <!-- CHARTS -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="glass-panel rounded-xl p-6">
+        <h3 class="text-sm font-bold text-on-surface mb-4">Category Distribution</h3>
+        <div style="position:relative;height:200px;"><canvas id="cat-chart"></canvas></div>
+      </div>
+      <div class="glass-panel rounded-xl p-6">
+        <h3 class="text-sm font-bold text-on-surface mb-4">Usage Trend (7 days)</h3>
+        <div style="position:relative;height:200px;"><canvas id="usage-chart"></canvas></div>
+      </div>
+      <div class="glass-panel rounded-xl p-6">
+        <h3 class="text-sm font-bold text-on-surface mb-4">AI Order Suggestions</h3>
+        <div class="space-y-3" id="ai-suggestions"></div>
+      </div>
+    </section>
+
+    <!-- INVENTORY TABLE -->
+    <section class="glass-panel rounded-xl overflow-hidden">
+      <div class="p-5 border-b border-white/5 flex items-center justify-between">
+        <div>
+          <h3 class="text-sm font-bold text-on-surface">Full Inventory</h3>
+          <p class="text-[10px] text-on-surface-variant mt-0.5">Sorted FEFO · Manager view (receive-only edit)</p>
+        </div>
+        <div class="flex gap-3">
+          <select id="cat-filter" onchange="filterTable()" class="bg-surface-container-low border border-white/10 rounded-lg px-3 py-2 text-xs text-on-surface-variant focus:outline-none focus:ring-1 focus:ring-primary/40">
+            <option value="">All Categories</option>
+          </select>
+          <button onclick="exportCSV()" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-xs font-bold hover:bg-white/10 transition-all">
+            <span class="material-symbols-outlined text-[18px]">download</span>Export CSV
+          </button>
+          <button onclick="openReceiveModal()" class="liquid-gradient-primary text-on-primary px-5 py-2 rounded-lg text-xs font-bold active:scale-95 transition-transform flex items-center gap-2">
+            <span class="material-symbols-outlined text-[18px]">add_box</span>Receive Stock
+          </button>
+        </div>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left">
+          <thead class="bg-white/5 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">
+            <tr>
+              <th class="px-5 py-4">Medicine</th>
+              <th class="px-5 py-4">Category</th>
+              <th class="px-5 py-4">Batch</th>
+              <th class="px-5 py-4">Qty</th>
+              <th class="px-5 py-4">Unit Cost</th>
+              <th class="px-5 py-4">Total Value</th>
+              <th class="px-5 py-4">Expiry</th>
+              <th class="px-5 py-4">Status</th>
+            </tr>
+          </thead>
+          <tbody id="mgr-tbody" class="divide-y divide-white/5">
+            <tr><td colspan="8" class="px-5 py-10 text-center text-on-surface-variant">Loading inventory…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ORDERS -->
+    <section class="glass-panel rounded-xl overflow-hidden" id="orders-section">
+      <div class="p-5 border-b border-white/5 flex items-center justify-between">
+        <h3 class="text-sm font-bold text-on-surface">Order Pipeline</h3>
+        <button onclick="openOrderModal()" class="liquid-gradient-primary text-on-primary px-4 py-2 rounded-lg text-xs font-bold active:scale-95 transition-transform">+ New Order</button>
+      </div>
+      <div class="p-6" id="orders-list">
+        <p class="text-center text-on-surface-variant text-sm py-6">Loading orders…</p>
+      </div>
+    </section>
+
+  </div>
 </main>
-</body></html>
+
+<!-- ALERTS DRAWER -->
+<div id="alerts-drawer" class="fixed top-0 right-0 h-full w-80 bg-surface-container border-l border-white/10 z-50 transform translate-x-full transition-transform shadow-2xl flex flex-col">
+  <div class="p-5 border-b border-white/5 flex items-center justify-between">
+    <h3 class="font-bold text-on-surface">Stock Alerts</h3>
+    <button onclick="toggleAlerts()"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+  </div>
+  <div id="alerts-list" class="flex-1 overflow-y-auto p-4 space-y-3"></div>
+</div>
+
+<!-- RECEIVE STOCK MODAL -->
+<div id="receive-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4">
+  <div class="absolute inset-0 modal-backdrop" onclick="closeReceiveModal()"></div>
+  <div class="relative z-10 w-full max-w-2xl bg-surface-container rounded-2xl border border-white/10 shadow-2xl overflow-hidden">
+    <div class="p-6 border-b border-white/5 flex items-center justify-between">
+      <h3 class="text-lg font-bold text-on-surface">Receive New Stock Batch</h3>
+      <button onclick="closeReceiveModal()"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+    </div>
+    <div class="p-6 grid grid-cols-2 gap-4 overflow-y-auto max-h-[70vh]">
+      <div class="col-span-2"><label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Medicine Name *</label>
+        <input id="r-name" class="w-full bg-white/5 border border-white/10 rounded-lg py-3 px-4 text-on-surface focus:ring-2 focus:ring-primary/40 focus:outline-none" placeholder="Paracetamol 500mg"/></div>
+      <div><label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Category</label>
+        <select id="r-cat" class="w-full bg-white/5 border border-white/10 rounded-lg py-3 px-4 text-on-surface focus:ring-2 focus:ring-primary/40 focus:outline-none">
+          <option>Analgesic</option><option>Antibiotic</option><option>Antiviral</option><option>Cardiovascular</option><option>Diabetic</option><option>Respiratory</option><option>Gastrointestinal</option><option>Neurological</option><option>Other</option>
+        </select></div>
+      <div><label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Batch Number *</label>
+        <input id="r-batch" class="w-full bg-white/5 border border-white/10 rounded-lg py-3 px-4 text-on-surface focus:ring-2 focus:ring-primary/40 focus:outline-none" placeholder="BT-2024-XXX"/></div>
+      <div><label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Quantity *</label>
+        <input id="r-qty" type="number" class="w-full bg-white/5 border border-white/10 rounded-lg py-3 px-4 text-on-surface focus:ring-2 focus:ring-primary/40 focus:outline-none" placeholder="500"/></div>
+      <div><label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Unit Cost (₹) *</label>
+        <input id="r-cost" type="number" step="0.01" class="w-full bg-white/5 border border-white/10 rounded-lg py-3 px-4 text-on-surface focus:ring-2 focus:ring-primary/40 focus:outline-none" placeholder="12.50"/></div>
+      <div><label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Expiry Date *</label>
+        <input id="r-expiry" type="date" class="w-full bg-white/5 border border-white/10 rounded-lg py-3 px-4 text-on-surface focus:ring-2 focus:ring-primary/40 focus:outline-none"/></div>
+      <div><label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Supplier</label>
+        <input id="r-supplier" class="w-full bg-white/5 border border-white/10 rounded-lg py-3 px-4 text-on-surface focus:ring-2 focus:ring-primary/40 focus:outline-none" placeholder="Cipla Ltd."/></div>
+      <div><label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Row</label>
+        <input id="r-row" class="w-full bg-white/5 border border-white/10 rounded-lg py-3 px-4 text-on-surface focus:ring-2 focus:ring-primary/40 focus:outline-none" placeholder="A1"/></div>
+      <div><label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Shelf</label>
+        <input id="r-shelf" class="w-full bg-white/5 border border-white/10 rounded-lg py-3 px-4 text-on-surface focus:ring-2 focus:ring-primary/40 focus:outline-none" placeholder="S2"/></div>
+      <div><label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Compartment</label>
+        <input id="r-comp" class="w-full bg-white/5 border border-white/10 rounded-lg py-3 px-4 text-on-surface focus:ring-2 focus:ring-primary/40 focus:outline-none" placeholder="C3"/></div>
+      <div><label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Reorder Threshold</label>
+        <input id="r-thresh" type="number" class="w-full bg-white/5 border border-white/10 rounded-lg py-3 px-4 text-on-surface focus:ring-2 focus:ring-primary/40 focus:outline-none" placeholder="30"/></div>
+    </div>
+    <div class="p-6 border-t border-white/5 flex gap-3 justify-end">
+      <button onclick="closeReceiveModal()" class="px-5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm font-bold hover:bg-white/10 transition-all">Cancel</button>
+      <button id="r-submit" onclick="submitStock()" class="px-5 py-2.5 rounded-xl liquid-gradient-primary text-on-primary text-sm font-bold active:scale-95 transition-all flex items-center gap-2">
+        <span id="r-btn-text">Save Batch</span><span id="r-spinner" class="spinner hidden"></span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ORDER MODAL -->
+<div id="order-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4">
+  <div class="absolute inset-0 modal-backdrop" onclick="closeOrderModal()"></div>
+  <div class="relative z-10 w-full max-w-lg bg-surface-container rounded-2xl border border-white/10 shadow-2xl overflow-hidden">
+    <div class="p-6 border-b border-white/5 flex items-center justify-between">
+      <h3 class="text-lg font-bold text-on-surface">Create Purchase Order</h3>
+      <button onclick="closeOrderModal()"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+    </div>
+    <div class="p-6 space-y-4">
+      <div><label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Medicine</label>
+        <select id="o-medicine" class="w-full bg-white/5 border border-white/10 rounded-lg py-3 px-4 text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/40"><option value="">Select…</option></select></div>
+      <div class="grid grid-cols-2 gap-4">
+        <div><label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Quantity</label>
+          <input id="o-qty" type="number" placeholder="100" class="w-full bg-white/5 border border-white/10 rounded-lg py-3 px-4 text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/40"/></div>
+        <div><label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Supplier</label>
+          <input id="o-supplier" placeholder="Supplier name" class="w-full bg-white/5 border border-white/10 rounded-lg py-3 px-4 text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/40"/></div>
+      </div>
+      <div><label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Notes</label>
+        <input id="o-notes" placeholder="Optional notes" class="w-full bg-white/5 border border-white/10 rounded-lg py-3 px-4 text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/40"/></div>
+    </div>
+    <div class="p-6 border-t border-white/5 flex gap-3 justify-end">
+      <button onclick="closeOrderModal()" class="px-5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm font-bold">Cancel</button>
+      <button id="o-submit" onclick="submitOrder()" class="px-5 py-2.5 rounded-xl liquid-gradient-primary text-on-primary text-sm font-bold active:scale-95 flex items-center gap-2">
+        <span id="o-btn-text">Place Order</span><span id="o-spinner" class="spinner hidden"></span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+let INVENTORY = [], ORDERS = [];
+let catChart, usageChart;
+let alertsOpen = false;
+
+authGuard(null, (user) => {
+  if(user.role !== "manager") { window.location.href = ROLE_PAGES[user.role]; return; }
+  const name = user.displayName || user.email.split("@")[0];
+  document.getElementById("sb-name").textContent = name.toUpperCase();
+  document.getElementById("sb-avatar").textContent = name[0].toUpperCase();
+  refreshData();
+});
+
+async function refreshData() {
+  const [invRes, ordRes, sumRes, aiRes] = await Promise.all([
+    API.get("/api/inventory"),
+    API.get("/api/orders"),
+    API.get("/api/analytics/summary"),
+    API.get("/api/intelligence/order-suggestions")
+  ]);
+
+  INVENTORY = (invRes.data || []).sort((a,b) => new Date(a.expiry)-new Date(b.expiry));
+  ORDERS    = ordRes.data || [];
+  const s   = sumRes.data || {};
+
+  // KPIs
+  const totalVal = INVENTORY.reduce((sum,i)=>sum+i.qty*i.unitCost,0);
+  const riskVal  = INVENTORY.filter(i=>{ const d=daysLeft(i.expiry); return d>=0&&d<=30; }).reduce((sum,i)=>sum+i.qty*i.unitCost,0);
+  document.getElementById("kpi-value").textContent  = "₹" + totalVal.toLocaleString("en-IN",{maximumFractionDigits:0});
+  document.getElementById("kpi-risk").textContent   = "₹" + riskVal.toLocaleString("en-IN",{maximumFractionDigits:0});
+  document.getElementById("kpi-orders").textContent = ORDERS.filter(o=>o.status==="requested"||o.status==="approved").length;
+
+  renderTable(INVENTORY);
+  buildFilters();
+  renderOrders();
+  renderCharts();
+  renderAI(aiRes.data || []);
+  renderAlerts();
+  populateOrderSelect();
+}
+
+function renderTable(data) {
+  document.getElementById("mgr-tbody").innerHTML = data.map(item => {
+    const d = daysLeft(item.expiry);
+    let badge = `<span class="px-2 py-1 rounded-full text-[10px] font-bold bg-secondary/10 text-secondary">Good</span>`;
+    if(d<0)         badge = `<span class="px-2 py-1 rounded-full text-[10px] font-bold bg-error/20 text-error">Expired</span>`;
+    else if(d<=7)   badge = `<span class="px-2 py-1 rounded-full text-[10px] font-bold bg-error/20 text-error">Expiring</span>`;
+    else if(d<=30)  badge = `<span class="px-2 py-1 rounded-full text-[10px] font-bold bg-tertiary/20 text-tertiary">Soon</span>`;
+    else if(item.qty<=(item.threshold||30)) badge = `<span class="px-2 py-1 rounded-full text-[10px] font-bold bg-tertiary/20 text-tertiary">Low Stock</span>`;
+    const expiryColor = d<0?"text-error":d<=30?"text-tertiary":"text-on-surface-variant";
+    return `<tr class="hover:bg-white/5 transition-colors ${d<=7&&d>=0?"bg-error/5":""}">
+      <td class="px-5 py-4"><span class="font-bold text-sm">${item.name}</span>${d<=7&&d>=0?'<span class="ml-2 text-[9px] font-black text-amber-400 bg-amber-400/10 px-1.5 py-0.5 rounded">FEFO</span>':''}</td>
+      <td class="px-5 py-4"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-white/5">${item.category}</span></td>
+      <td class="px-5 py-4 font-mono text-xs text-primary">${item.batch}</td>
+      <td class="px-5 py-4 font-bold">${item.qty}</td>
+      <td class="px-5 py-4 text-on-surface-variant">₹${item.unitCost}</td>
+      <td class="px-5 py-4 font-semibold">₹${(item.qty*item.unitCost).toLocaleString("en-IN",{maximumFractionDigits:0})}</td>
+      <td class="px-5 py-4 ${expiryColor} text-sm">${item.expiry}${d>=0&&d<=30?` (${d}d)`:d<0?" (Expired)":""}</td>
+      <td class="px-5 py-4">${badge}</td>
+    </tr>`;
+  }).join("");
+}
+
+function buildFilters() {
+  const cats = [...new Set(INVENTORY.map(i=>i.category))];
+  const sel = document.getElementById("cat-filter");
+  sel.innerHTML = '<option value="">All Categories</option>' + cats.map(c=>`<option>${c}</option>`).join("");
+}
+
+function filterTable() {
+  const q   = document.getElementById("search-input").value.toLowerCase();
+  const cat = document.getElementById("cat-filter").value;
+  const filtered = INVENTORY.filter(i =>
+    (!q || i.name.toLowerCase().includes(q) || i.batch.toLowerCase().includes(q)) &&
+    (!cat || i.category === cat));
+  renderTable(filtered);
+}
+
+function renderOrders() {
+  const steps=["requested","approved","dispatched","received"];
+  const stepLabel={"requested":"Requested","approved":"Approved","dispatched":"Dispatched","received":"Received"};
+  document.getElementById("orders-list").innerHTML = ORDERS.map(o => {
+    const stepIdx = steps.indexOf(o.status||"requested");
+    const pipeHtml = steps.map((s,i) => {
+      const cls = i<=stepIdx ? "bg-secondary border-secondary text-on-secondary" : "bg-white/5 border-white/20 text-on-surface-variant";
+      return `<div class="flex flex-col items-center flex-1">
+        <div class="w-8 h-8 rounded-full border-2 flex items-center justify-center text-xs font-black ${cls}">${i<stepIdx?"✓":i+1}</div>
+        <span class="text-[9px] font-bold text-on-surface-variant mt-1 uppercase tracking-wider">${stepLabel[s]}</span>
+      </div>${i<3?`<div class="h-0.5 flex-1 mt-4 ${i<stepIdx?"bg-secondary":"bg-white/10"}"></div>`:""}`
+    }).join("");
+    return `<div class="mb-5 pb-5 border-b border-white/5 last:border-0 last:mb-0 last:pb-0">
+      <div class="flex items-center justify-between mb-4">
+        <div><p class="font-bold text-sm text-on-surface">${o.medicine}</p><p class="text-[10px] text-on-surface-variant font-mono">${o.id} · ${o.qty} units · ${o.supplier||"—"}</p></div>
+        <div class="flex gap-2">
+          <span class="px-2 py-1 rounded-full text-[10px] font-bold bg-primary/10 text-primary">${stepLabel[o.status||"requested"]}</span>
+          ${o.status!=="received"?`<button onclick="advanceOrder('${o.id}')" class="px-3 py-1 rounded-full text-[10px] font-bold bg-secondary/10 text-secondary hover:bg-secondary/20 transition-all">Advance →</button>`:""}
+        </div>
+      </div>
+      <div class="flex items-center">${pipeHtml}</div>
+    </div>`;
+  }).join("") || '<p class="text-center text-on-surface-variant py-6">No orders found</p>';
+}
+
+function renderCharts() {
+  const cats={};
+  INVENTORY.forEach(i=>{ cats[i.category]=(cats[i.category]||0)+i.qty; });
+  const palette=["rgba(173,198,255,0.8)","rgba(78,222,163,0.8)","rgba(77,142,255,0.8)","rgba(255,179,173,0.8)","rgba(255,209,99,0.8)","rgba(167,139,250,0.8)","rgba(251,146,60,0.8)","rgba(52,211,153,0.8)"];
+
+  if(catChart) catChart.destroy();
+  catChart = new Chart(document.getElementById("cat-chart"), {
+    type:"doughnut",
+    data:{ labels:Object.keys(cats), datasets:[{data:Object.values(cats), backgroundColor:palette, borderWidth:0, hoverOffset:6}] },
+    options:{ responsive:true, maintainAspectRatio:false, cutout:"65%", plugins:{ legend:{ position:"bottom", labels:{ color:"#c2c6d6", font:{size:10}, padding:8 } } } }
+  });
+
+  const labels=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+  const usage=[42,38,55,61,47,29,52];
+  if(usageChart) usageChart.destroy();
+  usageChart = new Chart(document.getElementById("usage-chart"), {
+    type:"bar",
+    data:{ labels, datasets:[{ label:"Units Dispensed", data:usage, backgroundColor:"rgba(173,198,255,0.2)", borderColor:"#adc6ff", borderWidth:2, borderRadius:4 }] },
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ display:false } }, scales:{ y:{ grid:{ color:"rgba(255,255,255,0.05)" }, ticks:{ color:"#c2c6d6" } }, x:{ grid:{ display:false }, ticks:{ color:"#c2c6d6" } } } }
+  });
+}
+
+function renderAI(suggestions) {
+  if(!suggestions.length) {
+    suggestions = INVENTORY.filter(i=>isLowStock(i)||stockoutDays(i)<14).slice(0,4).map(i=>({
+      name:i.name, currentStock:i.qty, dailyUsage:i.dailyUsage||10, recommendedQty:orderRecommendation(i),
+      priority:stockoutDays(i)<7?"HIGH":"MEDIUM"
+    }));
+  }
+  document.getElementById("ai-suggestions").innerHTML = suggestions.slice(0,4).map(s => `
+    <div class="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/5">
+      <div>
+        <p class="text-xs font-bold text-on-surface">${s.name}</p>
+        <p class="text-[10px] text-on-surface-variant">Stock: ${s.currentStock} · ${s.dailyUsage}/day</p>
+      </div>
+      <div class="text-right">
+        <p class="text-lg font-black text-primary">${s.recommendedQty}</p>
+        <p class="text-[9px] text-on-surface-variant">units rec.</p>
+      </div>
+    </div>`).join("") || '<p class="text-xs text-on-surface-variant text-center py-4">All stock levels optimal ✓</p>';
+}
+
+function renderAlerts() {
+  const alerts=[];
+  INVENTORY.forEach(i => {
+    const d=daysLeft(i.expiry);
+    if(d<0) alerts.push({t:"error", m:`${i.name} EXPIRED`});
+    else if(d<=7) alerts.push({t:"error", m:`${i.name} expires in ${d}d`});
+    else if(d<=30) alerts.push({t:"warn", m:`${i.name} expires in ${d}d`});
+    if(i.qty<=(i.threshold||30)) alerts.push({t:"warn", m:`Low stock: ${i.name}`});
+  });
+  const badge=document.getElementById("alert-badge");
+  if(alerts.length) { badge.textContent=alerts.length; badge.classList.remove("hidden"); }
+  else badge.classList.add("hidden");
+  document.getElementById("alerts-list").innerHTML = alerts.map(a =>
+    `<div class="p-3 rounded-lg ${a.t==="error"?"bg-error/10 border border-error/20 text-error":"bg-tertiary/10 border border-tertiary/20 text-tertiary"} text-xs font-medium">${a.m}</div>`
+  ).join("") || '<p class="text-center text-on-surface-variant py-6 text-sm">No alerts ✓</p>';
+}
+
+function populateOrderSelect() {
+  const sel=document.getElementById("o-medicine");
+  sel.innerHTML='<option value="">Select medicine…</option>' + INVENTORY.map((i,idx)=>`<option value="${idx}">${i.name} (stock: ${i.qty})</option>`).join("");
+}
+
+// RECEIVE STOCK
+function openReceiveModal()  { document.getElementById("receive-modal").classList.remove("hidden"); document.getElementById("receive-modal").classList.add("flex"); }
+function closeReceiveModal() { document.getElementById("receive-modal").classList.add("hidden"); document.getElementById("receive-modal").classList.remove("flex"); }
+
+async function submitStock() {
+  const name=document.getElementById("r-name").value.trim();
+  const batch=document.getElementById("r-batch").value.trim();
+  const qty=parseInt(document.getElementById("r-qty").value);
+  const cost=parseFloat(document.getElementById("r-cost").value);
+  const expiry=document.getElementById("r-expiry").value;
+  if(!name||!batch||!qty||!expiry) { showToast("Fill all required fields","error"); return; }
+
+  document.getElementById("r-btn-text").textContent="Saving…";
+  document.getElementById("r-spinner").classList.remove("hidden");
+  document.getElementById("r-submit").disabled=true;
+
+  const res = await API.post("/api/inventory", {
+    name, batch, qty, unitCost:cost, expiry,
+    category:document.getElementById("r-cat").value,
+    supplier:document.getElementById("r-supplier").value,
+    row:document.getElementById("r-row").value||"A1",
+    shelf:document.getElementById("r-shelf").value||"S1",
+    comp:document.getElementById("r-comp").value||"C1",
+    threshold:parseInt(document.getElementById("r-thresh").value)||30,
+    dailyUsage:10
+  });
+
+  document.getElementById("r-btn-text").textContent="Save Batch";
+  document.getElementById("r-spinner").classList.add("hidden");
+  document.getElementById("r-submit").disabled=false;
+
+  if(res.status==="ok") { showToast(`✓ ${name} (${qty} units) added to inventory`,"success"); closeReceiveModal(); refreshData(); }
+  else showToast("Error: " + (res.error||"Unknown"),"error");
+}
+
+// ORDERS
+function openOrderModal()  { document.getElementById("order-modal").classList.remove("hidden"); document.getElementById("order-modal").classList.add("flex"); }
+function closeOrderModal() { document.getElementById("order-modal").classList.add("hidden"); document.getElementById("order-modal").classList.remove("flex"); }
+
+async function submitOrder() {
+  const idx=document.getElementById("o-medicine").value;
+  const qty=parseInt(document.getElementById("o-qty").value);
+  const supplier=document.getElementById("o-supplier").value.trim();
+  if(!idx||!qty||!supplier) { showToast("Fill all fields","error"); return; }
+
+  document.getElementById("o-btn-text").textContent="Placing…";
+  document.getElementById("o-spinner").classList.remove("hidden");
+  document.getElementById("o-submit").disabled=true;
+
+  const item=INVENTORY[idx];
+  const res = await API.post("/api/orders", { medicine:item.name, itemId:item.id, qty, supplier, notes:document.getElementById("o-notes").value });
+
+  document.getElementById("o-btn-text").textContent="Place Order";
+  document.getElementById("o-spinner").classList.add("hidden");
+  document.getElementById("o-submit").disabled=false;
+
+  if(res.status==="ok") { showToast(`✓ Order placed for ${qty}× ${item.name}`,"success"); closeOrderModal(); refreshData(); }
+  else showToast("Error: " + (res.error||"Unknown"),"error");
+}
+
+async function advanceOrder(orderId) {
+  const statusFlow={"requested":"approved","approved":"dispatched","dispatched":"received"};
+  const order=ORDERS.find(o=>o.id===orderId);
+  if(!order) return;
+  const next=statusFlow[order.status];
+  if(!next) return;
+  const res = await API.patch(`/api/orders/${orderId}/status`, {status:next});
+  if(res.status==="ok") { showToast(`Order ${orderId} advanced to ${next}`,"success"); refreshData(); }
+}
+
+function exportCSV() {
+  const rows=[["Medicine","Category","Batch","Qty","Unit Cost","Total Value","Expiry","Status"]];
+  INVENTORY.forEach(i=>{
+    const d=daysLeft(i.expiry);
+    const status=d<0?"Expired":d<=7?"Expiring Soon":i.qty<=(i.threshold||30)?"Low Stock":"Good";
+    rows.push([i.name,i.category,i.batch,i.qty,i.unitCost,(i.qty*i.unitCost).toFixed(2),i.expiry,status]);
+  });
+  const csv=rows.map(r=>r.join(",")).join("\n");
+  const a=document.createElement("a"); a.href="data:text/csv;charset=utf-8,"+encodeURIComponent(csv);
+  a.download="veda-inventory-"+new Date().toISOString().slice(0,10)+".csv"; a.click();
+}
+
+function toggleAlerts() { alertsOpen=!alertsOpen; document.getElementById("alerts-drawer").style.transform=alertsOpen?"translateX(0)":"translateX(100%)"; }
+function showSection(sec) { showToast("Navigating to "+sec+" (coming soon)","info"); }
+function isLowStock(i){ return i.qty<=(i.threshold||30); }
+</script>
+</body>
+</html>

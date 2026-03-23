@@ -3,7 +3,7 @@ from sklearn.linear_model import LinearRegression
 
 def forecast_usage(data):
     df = pd.DataFrame({
-        "day": range(len(data)),
+        "day": range(len(data)), # sytantic data pe train 
         "usage": data
     })
 
